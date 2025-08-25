@@ -70,6 +70,10 @@ a {
   text-decoration: none;
 }
 
+a:hover {
+  cursor: pointer;
+}
+
 input:focus {
   outline: none;
 }
