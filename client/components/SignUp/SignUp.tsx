@@ -7,7 +7,7 @@ import { postSearch } from "@/services/UserService";
 import { FaRegEye } from "react-icons/fa";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
-import { useSignUp } from "@/hooks/useSignUp";
+import { useOtp } from "@/hooks/useOtp";
 
 function SignUp(){
   const [showPassword, setShowPassword] = useState([false, false]);
@@ -19,7 +19,7 @@ function SignUp(){
   const isMobile = useMediaQuery({ maxWidth: 700 });
   const isTablet = useMediaQuery({ minWidth: 701, maxWidth: 1100 });
   const [searchParams, setSearchParams] = useSearchParams();
-  const { signupData, setSignupData } = useSignUp();
+  const { otpData, setOtpData } = useOtp();
 
   const onShowClick = (event, index) => {
     event.preventDefault();
@@ -55,7 +55,7 @@ function SignUp(){
         console.error("Error: Email Exists");
       }
       else {
-        setSignupData({ email, password });
+        setOtpData({ email, password });
 
         // transfer to OTP
         const newParams = new URLSearchParams(searchParams);

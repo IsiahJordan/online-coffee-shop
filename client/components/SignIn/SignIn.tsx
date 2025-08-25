@@ -1,9 +1,8 @@
 import styles from "./styles.module.css";
 import { MdEmail } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
-import { FaRegEyeSlash } from "react-icons/fa";
+import { FaRegEyeSlash, FaRegEye } from "react-icons/fa";
 import { useState } from "react";
-import { FaRegEye } from "react-icons/fa";
 import { useMediaQuery } from "react-responsive";
 import { postLogin } from "@/services/UserService";
 import { useNavigate } from "react-router-dom";
@@ -116,7 +115,7 @@ function SignIn(){
               </button>
             )}
           </div>
-          <a className={styles.link} href="">Forget Password?</a>
+            <a className={styles.link} onClick={() => navigate("/forget")}>Forget Password?</a>
         </form>
       </section> 
       <footer className={styles.footer}>
