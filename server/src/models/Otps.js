@@ -9,6 +9,8 @@ async function createOTP(email, length){
   const result = await pool.query(
     `INSERT INTO otps (email, otp, expires_at) VALUES ($1, $2, $3)`
   , [email, otp_code, expires_at]);
+
+  return otp_code;
 }
 
 // Make sure that when initializing there is no used old OTP
