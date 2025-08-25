@@ -1,0 +1,138 @@
+.page {
+  background: var(--sf);
+}
+
+@media (max-width: 700px){
+  /* ==== Placeholder ==== */
+  .page {
+    padding-left: var(--mobile-padding); 
+    padding-right: var(--mobile-padding); 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+  }
+
+  .header {
+    width: 100%;
+  }
+
+
+  /* ==== Content ==== */
+  /* - Header */
+  .title {
+    font-size: var(--mobile-title);
+    line-height: var(--mobile-title-height);
+  }
+
+  .description {
+    font-size: var(--mobile-text);
+    line-height: var(--mobile-text-height);
+    width: 80vw;
+    margin: 0.5rem auto;
+    float: center;
+  }
+
+  .title {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
+
+  /* Content */
+
+  .input {
+    font-size: var(--mobile-text);
+    line-height: var(--mobile-text-height);
+  }
+
+  /* Footer */
+
+  .primary-btn {
+    height: 32px;
+    border-radius: 5px;
+  }
+
+  .label {
+    font-size: var(--mobile-text);
+    line-height: var(--mobile-text-height);
+    margin-bottom: 0.5em;
+    margin-top: 1rem;
+  }
+
+  .footer {
+
+  }
+
+  .input-group {
+    margin-bottom: var(--mobile-padding);
+  }
+}
+
+/* Universal Attribute */
+
+.title {
+  color: var(--primary);
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+}
+
+.primary-btn {
+  background: var(--primary);
+  color: var(--secondary);
+  font-weight: bold; 
+  border-radius: 5px; 
+  width: 80vw;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.input {
+  background: transparent;
+  border: none;
+  padding-left: 2rem;
+}
+
+.link {
+  color: var(--link-color); 
+  text-align: right;
+}
+
+.icon-left {
+  position: absolute;
+  left: 8px;
+  font-size: 1.2rem;
+}
+
+.back-btn {
+  position: absolute;
+  top: 0;
+  margin-top: 30px;
+}
+
+.arrow {
+  width: 36px;
+  height: 32px;
+}
+
+.input-group {
+  border-radius: 1px;
+  border: 1px solid black;
+  background: var(--input-color);
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 8px 4px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  margin-bottom: 1rem;
+}
