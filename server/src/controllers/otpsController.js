@@ -1,4 +1,5 @@
 const { getOTP, createOTP, invalidateOTP, updateAttempts } = require("../models/Otps.js");
+const { sendMail } = require("../utility/mail.js");
 const jwt = require("jsonwebtoken");
 
 // Generate client OTP
@@ -10,9 +11,9 @@ async function initOTP(req, res){
   
   // Initialize OTP
   const digits = 4; // number of digit codes for OTP
-  await createOTP(email, digits);
+  const otp_code = await createOTP(email, digits);
   
-  res.status(201).json({ success: true });
+  res.status(201).json({ success: true, otp_code: otp_code });
 }
 
 async function verifyOTP(req, res){
@@ -52,4 +53,13 @@ async function successOTP(req, res){
   res.status(201).json({ succss: true, msg: "change used to true" });
 }
 
-module.exports = { initOTP, verifyOTP, successOTP };
+async function messageEmail(req, res){
+  const { email, msg } = req.body;
+
+  console.log("Sending a Message");
+  const result = await sendMail(email, "Message from Yummies & Cream", msg);
+
+  res.status(201).json({ success: true, msg: "send email to user" });
+}
+
+module.exports = { initOTP, verifyOTP, successOTP, messageEmail };
