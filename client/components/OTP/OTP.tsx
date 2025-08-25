@@ -1,9 +1,9 @@
 import { IoArrowBack } from "react-icons/io5";
 import styles from "./styles.module.css";
 import { useMediaQuery } from "react-responsive";
-import { generateOtp, verifyOtp, notifyOtp } from "@/services/OtpService";
+import { generateOtp, verifyOtp, notifyOtp, emailUser } from "@/services/OtpService";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useSignUp } from "@/hooks/useSignUp";
+import { useOtp } from "@/hooks/useOtp";
 import { useState, useEffect } from "react";
 
 interface VerifyOtpProps {
@@ -19,10 +19,30 @@ function OTP({ onSuccess }: VerifyOtpProps){
   const [timeLeft, setTimeLeft] = useState(30);
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  const { signupData, setSignupData } = useSignUp();
+  const { otpData, setOtpData } = useOtp();
+  
+  const returnBack = () => {
+    params.delete("otp");
+
+    navigate({
+      pathname: location.pathname,
+      search: params.toString()
+    }, { replace: true });
+  };
+
+  // Verify valid entry to OTP 
+  if ( otpData.email === ""){
+    returnBack();
+  }
+
+  // Set or Reset OTP  
+  async function setOtp(){
+    const res = await generateOtp({ email: otpData.email });
+    await emailUser({ email: otpData.email, code: res.otp_code });
+  }
 
   useEffect(() => {
-      generateOtp({ email: signupData.email });
+    setOtp();
   }, []);
 
 
@@ -32,7 +52,7 @@ function OTP({ onSuccess }: VerifyOtpProps){
     const code = values.join(""); 
     
     try {
-      const res = await verifyOtp({ email: signupData.email , code: code });
+      const res = await verifyOtp({ email: otpData.email , code: code });
       console.log(res);
 
       if (!res.succeess && res.action === "return"){
@@ -44,9 +64,9 @@ function OTP({ onSuccess }: VerifyOtpProps){
       }
       else {
         console.log("Very Successful")
-        await notifyOtp({ email: signupData.email }); // Notify successful otp
+        await notifyOtp({ email: otpData.email }); // Notify successful otp
 
-        onSuccess({ email: signupData.email });
+        onSuccess({ email: otpData.email });
       }
     } catch (error) {
       console.error("Error with the server: ", error);
@@ -80,14 +100,6 @@ function OTP({ onSuccess }: VerifyOtpProps){
     return () => clearInterval(timer);
   }, [timeLeft]);
 
-  const returnBack = () => {
-    params.delete("otp");
-
-    navigate({
-      pathname: location.pathname,
-      search: params.toString()
-    }, { replace: true });
-  };
 
   return (
     <div className={styles.component}>
@@ -172,7 +184,7 @@ function OTP({ onSuccess }: VerifyOtpProps){
           </div>
          
           <div className={styles["resend-timer"]}>
-            <p data-form={resendCode ?? "wait"} className={styles.reset}>Resend Code</p>
+            <p data-form={resendCode ?? "wait"} className={styles.reset} onClink={setOtp}>Resend Code</p>
             <p data-form={resendCode ?? "wait"} className={styles.timer}>in { timeLeft } seconds</p>
           </div>
         </form>
