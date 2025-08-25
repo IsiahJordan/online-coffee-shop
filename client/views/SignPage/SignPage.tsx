@@ -6,7 +6,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import StarReview from "@/components/StarReview";
 import OTP from "@/components/OTP";
-import { SignUpProvider } from "@/hooks/useSignUp";
+import { OtpProvider } from "@/hooks/useOtp";
 import { postRegister } from "@/services/UserService";
 
 function SignPage() {
@@ -56,29 +56,30 @@ function SignPage() {
         ):(<></>)}
         { isNotMobile ? (
           <div className={styles.copyright}>
-              @Copyright 2025 </div>
+            @Copyright 2025 
+          </div>
         ):(<></>)}
       </div>
     )}
     { isOTP ? (
       <div className={styles.otp}>
-        <SignUpProvider>
+        <OtpProvider>
           <OTP 
             onSuccess={async (data) => {
               await postRegister(data);
               navigate("/sign?form=in");
             }}
           />
-        </SignUpProvider>
+        </OtpProvider>
       </div>
     ) : (
       <div data-form={formType ?? "in"} className={styles.feature}>
         { isSignIn ? (
-          <SignIn/>
+            <SignIn/>
         ):(
-          <SignUpProvider>
+          <OtpProvider>
             <SignUp/>
-          </SignUpProvider>
+          </OtpProvider>
         )}
       </div>
     )}
