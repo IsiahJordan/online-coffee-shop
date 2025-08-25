@@ -14,6 +14,16 @@ function generate_otp(length){
   return otp;
 }
 
+// Data is a object that contains any required information
+function signToken(data, expires){ 
+  const token = jwt.sign(
+    data,
+    process.env.JWT_TOKEN,
+    { expiresIn: expires }
+  );
+  return token;
+}
+
 function verifyToken(token){
   try {
     const decoded = jwt.verify(token, process.env.JWT_TOKEN);
@@ -23,4 +33,4 @@ function verifyToken(token){
   }
 }
 
-module.exports = { generate_otp, verifyToken };
+module.exports = { generate_otp, signToken, verifyToken };
