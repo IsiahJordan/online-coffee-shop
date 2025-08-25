@@ -15,3 +15,13 @@ export const notifyOtp = async (entry: { email: string; }) => {
   const res = await api.post("otp/success", entry);
   return res.data;
 }
+
+export const emailUser = async (entry: { email: string, code: string }) => {
+  console.log(entry);
+  const message = {
+    email: entry.email,
+    msg: `This your otp code ${entry.code}`
+  }
+  const res = await api.post("otp/email", message);
+  return res.data;
+}

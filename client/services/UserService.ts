@@ -19,3 +19,13 @@ export const postLogout = async () => {
   const res = await api.post("/users/logout", {}, { withCredentials: true });
   return res.data;
 }
+
+export const postVerifyPassword = async (user: { email: string, password: string }) => {
+  const res = await api.post("/users/password/verify", user);
+  return res.data;
+}
+
+export const postUpdatePassword = async (user: { email: string, password: string }) => {
+  const res = await api.post("/users/password/change", user);
+  return res.data;
+}
