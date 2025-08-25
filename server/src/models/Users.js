@@ -30,4 +30,12 @@ async function updateLastLogin(userid) {
   return result.rows[0];
 }
 
-module.exports = { createUser, getUser, updateLastLogin };
+async function updatePassword(email, password) {
+  const result = await pool.query(
+    `UPDATE users SET password=$1 WHERE email=$2 RETURNING *`
+  , [password, email]);
+
+  return result.rows[0];
+}
+
+module.exports = { createUser, getUser, updateLastLogin, updatePassword };
