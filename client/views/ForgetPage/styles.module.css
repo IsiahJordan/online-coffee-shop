@@ -28,9 +28,7 @@
   .description {
     font-size: var(--mobile-text);
     line-height: var(--mobile-text-height);
-    width: 80vw;
-    margin: 0.5rem auto;
-    float: center;
+    text-align: center;
   }
 
   .title {
@@ -51,20 +49,19 @@
   .primary-btn {
     height: 32px;
     border-radius: 5px;
+    font-size: var(--mobile-subtitle);
+    line-height: var(--mobile-subtitle-height);
+    width: 80vw;
   }
 
   .label {
-    font-size: var(--mobile-text);
-    line-height: var(--mobile-text-height);
-    margin-bottom: 0.5em;
-    margin-top: 1rem;
-  }
-
-  .footer {
-
+    font-size: var(--mobile-subtitle);
+    line-height: var(--mobile-subtitle-height);
   }
 
   .input-group {
+    width: 79vw;
+    margin-top: 0.5rem;
     margin-bottom: var(--mobile-padding);
   }
 }
@@ -77,7 +74,9 @@
 
 .footer {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
 .primary-btn {
@@ -85,9 +84,6 @@
   color: var(--secondary);
   font-weight: bold; 
   border-radius: 5px; 
-  width: 80vw;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .input {
@@ -131,8 +127,7 @@
 .form {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  margin-left: 2rem;
-  margin-right: 2rem;
   margin-bottom: 1rem;
+  align-items: center;
+  justify-content: space-around;
 }

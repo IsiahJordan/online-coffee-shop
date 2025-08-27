@@ -1,7 +1,6 @@
 import styles from "./styles.module.css";
 import { IoArrowBack } from "react-icons/io5";
 import { MdEmail } from "react-icons/md";
-import { useMediaQuery } from "react-responsive";
 import { postTempUser } from "@/services/AuthService";
 import { postSearch } from "@/services/UserService";
 import OTP  from "@/components/OTP";
@@ -10,8 +9,6 @@ import { useState } from "react";
 import { useOtp } from "@/hooks/useOtp";
 
 function ForgetPage() {
-  const isMobile = useMediaQuery({ maxWidth: 700 });
-  const isTablet = useMediaQuery({ minWidth: 701, maxWidth: 1100 });
   const [email, setEmail] = useState("");
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -19,7 +16,7 @@ function ForgetPage() {
   let isOtp = false;
 
   const returnBack = () => {
-    navigate("/form?sign=in");
+    navigate("/sign?form=in");
   };
 
   const onSubmit = async (event) => {
@@ -51,35 +48,13 @@ function ForgetPage() {
 
         {/* Outer shell outside from form */}
         <header className={styles.header}>
-          { isMobile ? (
-            <>
-              <h1 className={styles.title}> 
-                Send Email
-              </h1> 
-              <p className={styles.description}>
-                Input your email address and we will email the code
-                to you.
-              </p>
-            </>
-          ): isTablet ? (
-            <>
-              <h1 className={styles.title}> 
-                Welcome to Yummies & Cream!
-              </h1> 
-              <p className={styles.description}>
-                Create your Account
-              </p>
-            </>
-          ): (
-            <>
-              <h1 className={styles.title}>
-                Nice to Meet You!
-              </h1>
-              <p className={styles.description}>
-                Create your account
-              </p>
-            </>
-          )}
+          <h1 className={styles.title}> 
+            Send Email
+          </h1> 
+          <p className={styles.description}>
+            Input your email address and we will email the code
+            to you.
+          </p>
         </header>   
 
         {/* Main form conent */}
