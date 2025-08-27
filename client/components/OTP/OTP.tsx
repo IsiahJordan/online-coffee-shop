@@ -66,7 +66,12 @@ function OTP({ onSuccess }: VerifyOtpProps){
         console.log("Very Successful")
         await notifyOtp({ email: otpData.email }); // Notify successful otp
 
-        onSuccess({ email: otpData.email });
+        if (otpData.password){
+          onSuccess({ email: otpData.email, password: otpData.password });
+        }
+        else {
+          onSuccess({ email: otpData.email });
+        }
       }
     } catch (error) {
       console.error("Error with the server: ", error);
