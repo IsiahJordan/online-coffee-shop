@@ -2,21 +2,42 @@ import styles from "./styles.module.css";
 import { IoArrowBack } from "react-icons/io5";
 import { MdEmail } from "react-icons/md";
 import { useMediaQuery } from "react-responsive";
+import { postTempUser } from "@/services/AuthService";
+import { postSearch } from "@/services/UserService";
 import OTP  from "@/components/OTP";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
+import { useState } from "react";
+import { useOtp } from "@/hooks/useOtp";
 
 function ForgetPage() {
   const isMobile = useMediaQuery({ maxWidth: 700 });
   const isTablet = useMediaQuery({ minWidth: 701, maxWidth: 1100 });
+  const [email, setEmail] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
+  const { otpData, setOtpData } = useOtp();
   let isOtp = false;
 
   const returnBack = () => {
     navigate("/form?sign=in");
   };
 
-  const onSubmit = (event) => {
+  const onSubmit = async (event) => {
     event.preventDefault();
+    const account = await postSearch({ email: email });
+
+    if (account.success){
+      setOtpData({ email: email });
+      const newParams = new URLSearchParams(searchParams);
+      newParams.set("otp", "1");
+      setSearchParams(newParams);
+    }
+    else {
+      console.error("Account Doesn't Exist");
+    }
+  }
+
+  if (searchParams.has("otp")){
     isOtp = true;
   }
 
@@ -92,8 +113,8 @@ function ForgetPage() {
       <>
         <OTP 
           onSuccess={async (data) => {
-  
-            navigate("/sign?form=in");
+            postTempUser({ email: email });
+            navigate("/password/change");
           }}
         />
       </>
