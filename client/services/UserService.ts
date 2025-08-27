@@ -26,6 +26,7 @@ export const postVerifyPassword = async (user: { email: string, password: string
 }
 
 export const postUpdatePassword = async (user: { email: string, password: string }) => {
+  console.log(user);
   const res = await api.post("/users/password/change", user);
   return res.data;
 }

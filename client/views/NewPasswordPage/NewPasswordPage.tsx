@@ -7,17 +7,21 @@ import { FaRegEye } from "react-icons/fa";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import { postVerifyPassword, postUpdatePassword } from "@/services/UserService";
+import { useOtp } from "@/hooks/useOtp";
 
 function NewPasswordPage(){
-  const [showPassword, setShowPassword] = useState([false, false, false]);
-  const [email, setEmail] = useState("");
-  const [oldPassword, setOldPassword] = useState("");
+  const [showPassword, setShowPassword] = useState([false, false]);
   const [newPassword, setNewPassword] = useState("");
   const [repassword, setRepassword] = useState("");
-  const [isAgreeChecked, setIsAgreeChecked] = useState(false);
   const navigate = useNavigate();
   const isMobile = useMediaQuery({ maxWidth: 700 });
   const isTablet = useMediaQuery({ minWidth: 701, maxWidth: 1100 });
+  const { otpData, setOtpData }  = useOtp();
+
+  if (!otpData.email){
+    console.error("Error no email");
+    navigate("/sign?form=in");
+  }
 
   const onShowClick = (event, index) => {
     event.preventDefault();
@@ -35,27 +39,17 @@ function NewPasswordPage(){
     if (newPassword !== repassword){
       console.error("Error: Password Doesn't Match");
     }
-    else if (isAgreeChecked === false){
-      console.error("Error: Agreement Isn't Accepted");
-    }
     else{
-      // Pass data to server
-      const userOldPassword = {
-        email: email,
-        password: oldPassword
-      };
-
+      console.log(otpData.email);
+      console.log(newPassword);
       const userNewPassword = {
-        email: email,
+        email: otpData.email,
         password: newPassword
       }
 
-      // Verify valid old password
-      const valid = await postVerifyPassword(userOldPassword);
-      
-      if (valid.success){
-        postUpdatePassword(userNewPassword);
-      }
+      await postUpdatePassword(userNewPassword);
+
+      navigate("/sign?form=in");
     }
   }
 
@@ -100,31 +94,6 @@ function NewPasswordPage(){
           {/* Input contents */}
 
           {/* Password */}
-          <label className={styles.label} htmlFor="password">
-            Old Password
-          </label>
-          <div className={styles["input-group"]}>
-            <RiLockPasswordFill className={styles["icon-left"]}/>
-            <input 
-                name="password" 
-                type={showPassword[0] ? "text" : "password"} 
-                className={styles.input} 
-                placeholder="Enter Old Password"
-                onChange={(e) => setOldPassword(e.target.value)}
-            required/>
-
-            {/* Show password icon based on showPassword state */}
-            { showPassword[0] ? (
-              <button className={styles["show-icon"]} onClick={(e) => onShowClick(e, 0)}>
-                <FaRegEye className={styles["icon-right"]}/>
-              </button>
-            ):(
-              <button className={styles["show-icon"]} onClick={(e) => onShowClick(e, 0)}>
-                <FaRegEyeSlash className={styles["icon-right"]}/>
-              </button>
-            )}
-          </div>
-
           <label className={styles.label} htmlFor="password">
             New Password
           </label>
