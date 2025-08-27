@@ -3,16 +3,15 @@ import SignIn from "@/components/SignIn";
 import SignUp from "@/components/SignUp";
 import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { useMediaQuery } from "react-responsive";
-import StarReview from "@/components/StarReview";
 import OTP from "@/components/OTP";
 import { OtpProvider } from "@/hooks/useOtp";
 import { postRegister } from "@/services/UserService";
+import SignInLayout from "@/layout/SignInLayout";
+import SignUpLayout from "@/layout/SignUpLayout";
+import OtpLayout from "@/layout/OtpLayout";
 
 function SignPage() {
-  let [searchParams, setSearchParams] = useSearchParams();
-  const isNotMobile = useMediaQuery({ minWidth: 701, minHeight: 760 });
-  const isDesktop = useMediaQuery({ minWidth: 1101 });
+  let [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -21,48 +20,18 @@ function SignPage() {
     }
   }, [searchParams, navigate]);
 
-  let isSignIn = false;
-  let isOTP = false;
   let formType = searchParams.get("form");
-  if (formType === "in"){
-    console.log("Login Set")
-    isSignIn = true;
-  }
-  else if (formType !== "out"){
-    console.error(`Not valid URI: ${formType}`)
+  let isSignIn = formType === "in";
+  let isOtp = searchParams.has("otp");
+
+  if (formType !== "out" && formType !== "in"){
     navigate("/error");
+    return null;
   }
 
-  if (searchParams.has("otp")){
-    isOTP = true;
-  }
-
-  return (
-  <div data-form={formType ?? "in"} className={styles.page}>
-    { isOTP ? (
-      <></>
-    ):(
-      <div className={styles.hero}>
-        <img className={styles.logo} src="/logo.svg" alt="yummies_cream_logo.svg"/>
-        { isDesktop ? (
-          <h1 className={styles.title}>Yummies & Cream</h1>
-        ):(<></>)}
-        <p className={styles.review}>"Yummies & Cream is the best delicious cookies in the entire world" - Gordon Ramsey</p>
-        { isDesktop && isSignIn ? (
-          <>
-            <StarReview count={4}/>
-            <img className={styles.picture} src="/coffee-signin.png" alt="yummies_hero_pic.png"/>
-          </>
-        ):(<></>)}
-        { isNotMobile ? (
-          <div className={styles.copyright}>
-            @Copyright 2025 
-          </div>
-        ):(<></>)}
-      </div>
-    )}
-    { isOTP ? (
-      <div className={styles.otp}>
+  if (isOtp) {
+    return (
+      <OtpLayout>
         <OtpProvider>
           <OTP 
             onSuccess={async (data) => {
@@ -71,19 +40,20 @@ function SignPage() {
             }}
           />
         </OtpProvider>
-      </div>
-    ) : (
-      <div data-form={formType ?? "in"} className={styles.feature}>
-        { isSignIn ? (
-            <SignIn/>
-        ):(
-          <OtpProvider>
-            <SignUp/>
-          </OtpProvider>
-        )}
-      </div>
-    )}
-  </div>
+      </OtpLayout>
+    );
+  }
+
+  return isSignIn ? (
+    <SignInLayout>
+      <SignIn/>
+    </SignInLayout>
+  ) : (
+    <SignUpLayout>
+      <OtpProvider>
+        <SignUp/>
+      </OtpProvider>
+    </SignUpLayout>
   );
 }
 
