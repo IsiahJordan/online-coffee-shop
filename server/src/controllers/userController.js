@@ -1,5 +1,5 @@
-const { createUser, getUser, updateLastLogin } = require('../models/Users.js');
-const { signToken } = require('../utility/security.js');
+const { createUser, getUser, updateLastLogin, updatePassword } = require('../models/Users.js');
+const { signToken, verifyToken } = require('../utility/security.js');
 const bcrypt = require('bcrypt');
 
 async function register(req, res) {
@@ -13,6 +13,7 @@ async function register(req, res) {
 
 async function search(req, res){
   const { email } = req.body;
+  console.log(`Searching ${email}`);
 
   // searh user
   const existing = getUser(email);
@@ -32,6 +33,18 @@ async function temporary(req, res){
   res.status(201).json({ success: true, msg: "Send JWT token" });
 }
 
+// Check if user has authority to access feature
+async function authorize(req, res){
+  const { role } = req.body;
+  const token = req.cookies.access_token;
+
+  const decoded = await verifyToken(token);
+
+  if (!decoded.role || decoded.role !== role) return res.status(401).json({ success: false, error: "Not Authoritize" });
+
+  res.status(201).json({ success: true, msg: "Authoritization Verified" });
+}
+
 // Verify password
 async function verify(req, res) {
   const { email, password } = req.body;
@@ -46,11 +59,12 @@ async function verify(req, res) {
   res.status(201).json({ success: true, msg: "Password Matches" });
 }
 
-async function updatePassword(req, res){
-  const { email, password }  = req.body;
+async function changePassword(req, res){
+  const { email, password } = req.body;
   console.log(`Updating Password for ${email}`);
 
-  const result = await updatePassword(email, password);
+  const passwordHash = await bcrypt.hash(password, 10);
+  const result = await updatePassword(email, passwordHash);
   if(!result) return res.status(400).json({ success: false, action: "return", error: "User Cannot Be Found" });
 
   res.status(201).json({ success: true, msg: "Successful Update Password"});
@@ -106,4 +120,4 @@ async function logout(req, res) {
   res.status(201).json({ success: true, msg: "Successful Cleared Cookies" });
 }
 
-module.exports = { register, login, search, temporary, verify, updatePassword, logout };
+module.exports = { register, login, search, temporary, verify, changePassword, logout };
