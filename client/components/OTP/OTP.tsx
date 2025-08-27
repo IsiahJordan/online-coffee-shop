@@ -108,9 +108,11 @@ function OTP({ onSuccess }: VerifyOtpProps){
 
   return (
     <div className={styles.component}>
-      <button type="button" className={styles["back-btn"]} onClick={returnBack}>
-        <IoArrowBack className={styles.arrow}/>
-      </button>
+      { isMobile &&
+        <button type="button" className={styles["back-btn"]} onClick={returnBack}>
+          <IoArrowBack className={styles.arrow}/> 
+        </button>
+      }
 
       {/* Outer shell outside from form */}
       <header className={styles.header}>
@@ -192,11 +194,11 @@ function OTP({ onSuccess }: VerifyOtpProps){
             <p data-form={resendCode ?? "wait"} className={styles.reset} onClink={setOtp}>Resend Code</p>
             <p data-form={resendCode ?? "wait"} className={styles.timer}>in { timeLeft } seconds</p>
           </div>
+          <footer className={styles.footer}>
+            <button className={styles["primary-btn"]} onClick={onSubmit}>Submit Code</button>
+          </footer>
         </form>
       </section> 
-      <footer className={styles.footer}>
-        <button className={styles["primary-btn"]} onClick={onSubmit}>Submit Code</button>
-      </footer>
     </div>
   );
 }
