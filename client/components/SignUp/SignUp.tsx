@@ -51,16 +51,12 @@ function SignUp(){
       const valid = await postSearch({ email: email });
       const exist = Object.keys(valid.data).length;
       
-      if (exist){
+      if (valid.success && exist > 0){
         console.error("Error: Email Exists");
       }
       else {
         setOtpData({ email, password });
-
-        // transfer to OTP
-        const newParams = new URLSearchParams(searchParams);
-        newParams.set("otp", "1");
-        setSearchParams(newParams);
+        navigate("/sign?form=out&otp=1");
       }
 
     }
