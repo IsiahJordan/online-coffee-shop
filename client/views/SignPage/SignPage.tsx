@@ -29,31 +29,27 @@ function SignPage() {
     return null;
   }
 
-  if (isOtp) {
-    return (
-      <OtpLayout>
-        <OtpProvider>
-          <OTP 
+  return (
+    <OtpProvider>   
+      {isOtp ? (
+        <OtpLayout>
+          <OTP
             onSuccess={async (data) => {
               await postRegister(data);
               navigate("/sign?form=in");
             }}
           />
-        </OtpProvider>
-      </OtpLayout>
-    );
-  }
-
-  return isSignIn ? (
-    <SignInLayout>
-      <SignIn/>
-    </SignInLayout>
-  ) : (
-    <SignUpLayout>
-      <OtpProvider>
-        <SignUp/>
-      </OtpProvider>
-    </SignUpLayout>
+        </OtpLayout>
+      ) : isSignIn ? (
+        <SignInLayout>
+          <SignIn />
+        </SignInLayout>
+      ) : (
+        <SignUpLayout>
+          <SignUp />
+        </SignUpLayout>
+      )}
+    </OtpProvider>
   );
 }
 
