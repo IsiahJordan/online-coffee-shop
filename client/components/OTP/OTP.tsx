@@ -42,7 +42,12 @@ function OTP({ onSuccess }: VerifyOtpProps){
   }
 
   useEffect(() => {
-    setOtp();
+    async function genOtp(){
+      if ( otpData.email ){
+        await setOtp();
+      }
+    }
+    genOtp();
   }, []);
 
 
@@ -63,6 +68,7 @@ function OTP({ onSuccess }: VerifyOtpProps){
         console.log("try again");
       }
       else {
+        console.log(otpData.email);
         console.log("Very Successful")
         await notifyOtp({ email: otpData.email }); // Notify successful otp
 
@@ -116,34 +122,12 @@ function OTP({ onSuccess }: VerifyOtpProps){
 
       {/* Outer shell outside from form */}
       <header className={styles.header}>
-        { isMobile ? (
-          <>
-            <h1 className={styles.title}> 
-              Verification Code
-            </h1> 
-            <p className={styles.description}>
-              We send a 4-code to your email
-            </p>
-          </>
-        ): isTablet ? (
-          <>
-            <h1 className={styles.title}> 
-              Welcome to Yummies & Cream!
-            </h1> 
-            <p className={styles.description}>
-              Create your Account
-            </p>
-          </>
-        ): (
-          <>
-            <h1 className={styles.title}>
-              Nice to Meet You!
-            </h1>
-            <p className={styles.description}>
-              Create your account
-            </p>
-          </>
-        )}
+        <h1 className={styles.title}> 
+          Verification Code
+        </h1> 
+        <p className={styles.description}>
+          We send a 4-code to your email
+        </p>
       </header>   
 
       {/* Main form conent */}
@@ -191,11 +175,24 @@ function OTP({ onSuccess }: VerifyOtpProps){
           </div>
          
           <div className={styles["resend-timer"]}>
-            <p data-form={resendCode ?? "wait"} className={styles.reset} onClink={setOtp}>Resend Code</p>
+            <p data-form={resendCode ?? "wait"} className={styles.reset} onClick={() => {
+              if (resendCode === "reset"){
+                setOtp();
+                setTimeLeft(30);
+                setResendCode("wait");
+              }
+            }}>
+              Resend Code
+            </p>
             <p data-form={resendCode ?? "wait"} className={styles.timer}>in { timeLeft } seconds</p>
           </div>
           <footer className={styles.footer}>
             <button className={styles["primary-btn"]} onClick={onSubmit}>Submit Code</button>
+            { !isMobile && 
+              <button className={styles["secondary-btn"]} onClick={() => returnBack()}>
+                Return Back
+              </button> 
+            }
           </footer>
         </form>
       </section> 

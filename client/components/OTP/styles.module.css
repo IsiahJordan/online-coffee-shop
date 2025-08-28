@@ -2,6 +2,7 @@
   /* ==== Placeholder ==== */
   .component {
     padding-left: var(--mobile-padding); 
+    background: var(--sf);
     padding-right: var(--mobile-padding); 
     display: flex;
     flex-direction: column;
@@ -46,7 +47,184 @@
     height: 32px;
     border-radius: 5px;
   }
+}
 
+/* Tablet View */
+
+@media (max-width: 1100px) and (min-width: 701px) {
+  .component {
+    padding-left: var(--tablet-padding); 
+    padding-right: var(--tablet-padding); 
+    padding-top: 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 13px;
+  }
+
+  .header {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* ==== Content ==== */
+  /* - Header */
+  .title {
+    font-size: var(--tablet-title);
+    line-height: var(--tablet-title-height);
+  }
+
+  .description {
+    font-size: var(--tablet-subtitle);
+    line-height: var(--tablet-subtitle-height);
+    text-align: center;
+  }
+
+  .title {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
+
+  /* Content */
+
+  .input {
+    font-size: var(--tablet-text);
+    line-height: var(--tablet-text-height);
+    width: 80%;
+  }
+
+  /* Footer */
+
+  .footer {
+    margin-bottom: 3rem;
+  }
+
+  .label {
+    font-size: var(--tablet-subtitle);
+    line-height: var(--tablet-subtitle-height);
+  }
+
+  .input-group {
+    margin-bottom: 1rem;
+  }
+
+  .primary-btn {
+    font-size: var(--tablet-subtitle);
+    line-height: var(--tablet-subtitle-height);
+    height: 32px;
+    width: 90%;
+  }
+
+  .secondary-btn {
+    font-size: var(--tablet-subtitle);
+    line-height: var(--tablet-subtitle-height);
+    width: 90%;
+    margin-top: 0.8em;
+    border: 1px solid #000;
+    height: 32px;
+    margin-bottom: 4rem;
+  }
+
+  .back-btn {
+    width: 0%; 
+  }
+
+}
+
+/* Desktop View */
+
+@media (min-width: 1101px) {
+  .component {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    gap: 1.5rem;
+    height: 100%;
+    width: 60vh;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .header {
+    text-align: left;
+    padding-left: var(--desktop-padding); 
+    padding-right: var(--desktop-padding);
+    margin-left: 2rem;
+  }
+
+  .form {
+    padding-left: var(--desktop-padding); 
+    padding-right: var(--desktop-padding); 
+  }
+
+
+  .title {
+    font-size: var(--desktop-title);
+    line-height: var(--desktop-title-height);
+    margin-bottom: 0.2em;
+  }  
+
+  .input {
+    font-size: var(--mobile-text);
+    line-height: var(--mobile-text-height);
+  }
+
+  /* Footer */
+  
+  .footer {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  .primary-btn {
+    border-radius: 5px;
+    font-size: var(--tablet-button);
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  .secondary-btn {
+    margin-top: 0.5em;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border: 1px solid #000;
+    font-size: var(--tablet-button);
+  }
+
+  .input-group {
+    margin-bottom: 1rem;
+  }
+
+  .description {
+    font-size: var(--mobile-subtitle);
+    line-height: var(--mobile-subtitle-height);
+    width: 80%;
+  }
+
+  .label {
+    font-size: var(--desktop-text);
+    line-height: var(--desktop-text-height);
+    margin-bottom: 5px;
+    margin-top: 1rem;
+  }
+
+  .primary-btn {
+    margin-bottom: 0.5em;
+    height: 36px;
+    font-size: var(--desktop-text);
+    line-height: var(--desktop-text-height);
+    margin-top: 2rem;
+    width: 100%;
+  }
+
+  .secondary-btn {
+    height: 36px;
+    font-size: var(--desktop-text);
+    line-height: var(--desktop-text-height);
+    width: 100%;
+  }
 }
 
 /* Universal Attribute */
@@ -58,6 +236,7 @@
 .footer {
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .primary-btn {
@@ -65,7 +244,6 @@
   color: var(--secondary);
   font-weight: bold; 
   border-radius: 5px; 
-  width: 80vw;
   margin-left: auto;
   margin-right: auto;
 }
@@ -145,4 +323,10 @@
 .arrow {
   width: 36px;
   height: 32px;
+}
+
+.secondary-btn {
+  color: var(--primary);
+  font-weight: bold;
+  border-radius: 5px;
 }
