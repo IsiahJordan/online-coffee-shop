@@ -16,11 +16,10 @@ async function search(req, res){
   console.log(`Searching ${email}`);
 
   // searh user
-  const existing = getUser(email);
-
+  const existing = await getUser(email);
   if(!existing) return res.status(400).json({ success: false, msg: "Error in Searching"});
 
-  return res.status(201).json({ success: true, data: existing,  msg: "Found Email" });
+  return res.status(201).json({ success: true, data: existing, msg: "Found Email" });
 }
 
 // Sign token for used in quick transaction with short login session
