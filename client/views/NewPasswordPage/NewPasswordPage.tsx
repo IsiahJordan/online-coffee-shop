@@ -7,6 +7,7 @@ import { FaRegEye } from "react-icons/fa";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import { postVerifyPassword, postUpdatePassword } from "@/services/UserService";
+import NewPasswordLayout from "@/layout/NewPasswordLayout";
 import { useOtp } from "@/hooks/useOtp";
 
 function NewPasswordPage(){
@@ -55,94 +56,77 @@ function NewPasswordPage(){
 
   return (
     <div className={styles.page}>
-      {/* Outer shell outside from form */}
-      <header className={styles.header}>
-        { isMobile ? (
-          <>
-            <h1 className={styles.title}> 
-              New Password
-            </h1> 
-            <p className={styles.description}>
-              Enter The New Password
-            </p>
-          </>
-        ): isTablet ? (
-          <>
-            <h1 className={styles.title}> 
-              Welcome to Yummies & Cream!
-            </h1> 
-            <p className={styles.description}>
-              Create your Account
-            </p>
-          </>
-        ): (
-          <>
-            <h1 className={styles.title}>
-              Nice to Meet You!
-            </h1>
-            <p className={styles.description}>
-              Create your account
-            </p>
-          </>
-        )}
-      </header>   
-
-      {/* Main form conent */}
-      <section className={styles.content}>
-        <form className={styles.form}>
-
-          {/* Input contents */}
-
-          {/* Password */}
-          <label className={styles.label} htmlFor="password">
+      <NewPasswordLayout>
+        {/* Outer shell outside from form */}
+        <header className={styles.header}>
+          <h1 className={styles.title}> 
             New Password
-          </label>
-          <div className={styles["input-group"]}>
-            <RiLockPasswordFill className={styles["icon-left"]}/>
-            <input 
-                name="repassword" 
-                type={showPassword[1] ? "text" : "password"} 
-                className={styles.input} 
-                placeholder="Enter New Password"
-                onChange={(e) => setNewPassword(e.target.value)}
-            required/>
-            { showPassword[1] ? (
-              <button className={styles["show-icon"]} onClick={(e) => onShowClick(e, 1)}>
-                <FaRegEye className={styles["icon-right"]}/>
-              </button>
-            ):(
-              <button className={styles["show-icon"]} onClick={(e) => onShowClick(e, 1)}>
-                <FaRegEyeSlash className={styles["icon-right"]}/>
-              </button>
-            )}
-          </div>
-          <label className={styles.label} htmlFor="password">
-            New Re-Password
-          </label>
-          <div className={styles["input-group"]}>
-            <RiLockPasswordFill className={styles["icon-left"]}/>
-            <input 
-                name="repassword" 
-                type={showPassword[2] ? "text" : "password"} 
-                className={styles.input} 
-                placeholder="Enter New Re-Password"
-                onChange={(e) => setRepassword(e.target.value)}
-            required/>
-            { showPassword[2] ? (
-              <button className={styles["show-icon"]} onClick={(e) => onShowClick(e, 2)}>
-                <FaRegEye className={styles["icon-right"]}/>
-              </button>
-            ):(
-              <button className={styles["show-icon"]} onClick={(e) => onShowClick(e, 2)}>
-                <FaRegEyeSlash className={styles["icon-right"]}/>
-              </button>
-            )}
-          </div>
-        </form>
-      </section> 
-      <footer className={styles.footer}>
-        <button className={styles["primary-btn"]} onClick={onSubmit}>Change Password</button>
-      </footer>
+          </h1> 
+          <p className={styles.description}>
+            Enter The New Password
+          </p>
+        </header>   
+
+        {/* Main form conent */}
+        <section className={styles.content}>
+          <form className={styles.form}>
+
+            {/* Input contents */}
+
+            {/* Password */}
+            <label className={styles.label} htmlFor="password">
+              New Password
+            </label>
+            <div className={styles["input-group"]}>
+              <RiLockPasswordFill className={styles["icon-left"]}/>
+              <input 
+                  name="repassword" 
+                  type={showPassword[1] ? "text" : "password"} 
+                  className={styles.input} 
+                  placeholder="Enter New Password"
+                  onChange={(e) => setNewPassword(e.target.value)}
+              required/>
+              { showPassword[1] ? (
+                <button className={styles["show-icon"]} onClick={(e) => onShowClick(e, 1)}>
+                  <FaRegEye className={styles["icon-right"]}/>
+                </button>
+              ):(
+                <button className={styles["show-icon"]} onClick={(e) => onShowClick(e, 1)}>
+                  <FaRegEyeSlash className={styles["icon-right"]}/>
+                </button>
+              )}
+            </div>
+            <label className={styles.label} htmlFor="password">
+              New Re-Password
+            </label>
+            <div className={styles["input-group"]}>
+              <RiLockPasswordFill className={styles["icon-left"]}/>
+              <input 
+                  name="repassword" 
+                  type={showPassword[2] ? "text" : "password"} 
+                  className={styles.input} 
+                  placeholder="Enter New Re-Password"
+                  onChange={(e) => setRepassword(e.target.value)}
+              required/>
+              { showPassword[2] ? (
+                <button className={styles["show-icon"]} onClick={(e) => onShowClick(e, 2)}>
+                  <FaRegEye className={styles["icon-right"]}/>
+                </button>
+              ):(
+                <button className={styles["show-icon"]} onClick={(e) => onShowClick(e, 2)}>
+                  <FaRegEyeSlash className={styles["icon-right"]}/>
+                </button>
+              )}
+            </div>
+            <footer className={styles.footer}>
+              <button className={styles["primary-btn"]} onClick={onSubmit}>Change Password</button>
+              { !isMobile &&
+                <button className={styles["secondary-btn"]} onClick={() => navigate("/sign?form=in")}>Return to Sign In</button>
+              }
+            </footer>
+          </form>
+        </section> 
+      </NewPasswordLayout>
     </div>
   );
 }
