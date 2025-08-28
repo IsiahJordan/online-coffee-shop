@@ -1,0 +1,89 @@
+:root {
+    /* Color Pallete */
+    --bg: #343A40;
+    --sf: #DEE2E6; 
+    --primary: #343A40;
+    --secondary: rgba(255, 255, 255, 0.9);
+    --link-color: #6155F5;
+    --hint-color: #ADB5BD;
+    --input-color: rgba(173, 181, 189, 0.3);
+
+    /* Spaces */
+    --mobile-padding: 12px;
+    --desktop-padding: 58px;
+    --tablet-padding: 48px;
+
+    /* Font Size */
+    --mobile-title: 28px;
+    --mobile-subtitle: 16px;
+    --mobile-text: 14px;
+    --mobile-link: 12px;
+
+    --tablet-text: 18px;
+    --tablet-title: 24px;
+    --tablet-subtitle: 16px;
+    --tablet-button: 14px;
+
+    --desktop-title: 36px;
+    --desktop-subtitle: 24px;
+    --desktop-text: 18px;
+    --copyright-text: 12px;
+
+    /* Line Height */
+    --mobile-title-height: 32px;
+    --mobile-subtitle-height: 24px;
+    --mobile-text-height: 16px;
+    
+    --tablet-text-height: 20px;
+    --tablet-title-height: 32px;
+    --tablet-subtitle-height: 24px;
+    --tablet-button-height: 16px;
+
+    --desktop-title-height: 32px;
+    --desktop-subtitle-height: 24px;
+    --desktop-text-height: 20px;
+    --copyright-text-height: 16px;
+}
+
+body {
+  background: var(--bg);
+  font-family: 'Inter';
+  padding: 0;
+  margin: 0;
+}
+
+.surface {
+  background: var(--sf);
+  color: var(--primary);
+}
+
+button {
+  background: none;
+  border: none;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  cursor: pointer;
+}
+
+input:focus {
+  outline: none;
+}
+
+input[type="checkbox"] {
+  border: 2px solid black;
+  min-width: 15px;
+  min-height: 15px;
+  border: 2px solid #999;   /* dark border */
+  border-radius: 4px;       /* optional, for rounded look */
+  cursor: pointer;
+  background: #fff;
+}

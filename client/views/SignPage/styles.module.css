@@ -1,0 +1,20 @@
+/* Mobile View */
+
+@media (max-width: 700px) {
+}
+
+/* Table View */
+
+@media (max-width: 1100px) and (min-width: 701px) {
+}
+
+/* Desktop View */
+
+@media (min-width: 1101px) {
+}
+
+/* Universal Design */
+
+.otp {
+  background: var(--sf);
+}
