@@ -46,6 +46,7 @@
   .primary-btn {
     height: 32px;
     border-radius: 5px;
+    width: 80%;
   }
 }
 
@@ -251,6 +252,9 @@
 .input {
   background: transparent;
   border: none;
+  width: 10vw;
+  max-width: 72px;
+  height: auto;
 }
 
 .link {
