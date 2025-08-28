@@ -12,7 +12,11 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/sign" element={<SignPage/>} />
+        <Route path="/sign" element={
+          <OtpProvider>
+            <SignPage/>
+          </OtpProvider>
+        } />
         <Route path="/home" element={<HomePage/>} />
         <Route path="/forget" element={
           <OtpProvider>
