@@ -23,8 +23,9 @@
   }
 
   .logo {
-    width: 144px;
-    height: 144px;
+    width: 35vw;
+    max-width: 144px;
+    height: auto;
   }
 
   .otp {
@@ -45,8 +46,9 @@
   } 
 
   .logo {
-    width: 216px;
-    height: 216px;
+    width: 20vw;
+    max-width: 216px;
+    height: auto;
   }
 
   .review {
@@ -99,9 +101,17 @@
   } 
   
   .logo {
-    width: 288px;
-    height: 288px;
+    width: 15vw;
+    max-width: 288px;
+    height: auto;
   }
+
+  .picture {
+    width: 30vw;
+    max-width: 500px;
+    height: auto;
+    margin-top: -4rem;
+  } 
   
   .title {
     font-size: var(--desktop-title);
@@ -139,6 +149,7 @@
 
 .page {
   background: var(--bg);
+  overflow: hidden;
 }
 
 .feature {
@@ -150,6 +161,12 @@
   width: 500px;
   height: 500px;
   margin-top: -100px;
+}
+
+.logo,
+.picture {
+  display: block;
+  object-fit: contain; /* safe scaling */
 }
 
 .copyright {
