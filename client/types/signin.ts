@@ -1,7 +1,7 @@
 
 export type InputData = {
   hint?: string;
-  type: string; // Type of input box (i.e. Email, Password)
+  type: string; 
   onChange: (text: string) => string; 
 };
 
