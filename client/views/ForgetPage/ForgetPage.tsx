@@ -4,7 +4,7 @@ import { IoArrowBack } from "react-icons/io5";
 import { MdEmail } from "react-icons/md";
 import { postTempUser } from "@/services/AuthService";
 import { postSearch } from "@/services/UserService";
-import OTP  from "@/components/OTP";
+import Otp from "@/components/Otp";
 import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
@@ -92,7 +92,7 @@ function ForgetPage() {
         </>
         ) : (
         <>
-          <OTP 
+          <Otp
             onSuccess={async (data) => {
               postTempUser({ email: email });
               navigate("/password/change");
