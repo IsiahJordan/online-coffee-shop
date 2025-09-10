@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, ReactNode } from "react";
+import { useLogger } from "@/hooks/useLogger";
 
 type OtpData = {
   email: string;
@@ -18,7 +19,9 @@ export const OtpProvider = ({ children }: { children: ReactNode }) => {
     password: "",
   });
 
-
+  const log = useLogger("OtpProider");
+  log.debug(`set email: ${ otpData.email } and password: ${ otpData.password }`);
+  
   return (
     <OtpContext.Provider value={{ otpData, setOtpData }}>
       {children}
@@ -27,10 +30,14 @@ export const OtpProvider = ({ children }: { children: ReactNode }) => {
 };
 
 export const useOtp = () => {
+  const log = useLogger("useOtp");
+  log.debug("otp called");
+  
   const context = useContext(OtpContext);
   if (!context) {
-    throw new Error("Otp must be used within a OtpProvider");
+    log.warning("Otp must be used within a OtpProvider");
   }
+
   return context;
 };
 
