@@ -7,7 +7,7 @@ import { useOtp } from "@/hooks/useOtp";
 import { useState, useEffect } from "react";
 
 interface VerifyOtpProps {
-  onSuccess?: (data: { email: string; }) => void | Promise<void>;
+ onSuccess?: (data: { email: string; }) => void | Promise<void>;
 };
 
 function OTP({ onSuccess }: VerifyOtpProps){
@@ -70,7 +70,7 @@ function OTP({ onSuccess }: VerifyOtpProps){
       else {
         console.log(otpData.email);
         console.log("Very Successful")
-        await notifyOtp({ email: otpData.email }); // Notify successful otp
+        await notifyOtp({ email: otpData.email }); 
 
         if (otpData.password){
           onSuccess({ email: otpData.email, password: otpData.password });
@@ -97,7 +97,6 @@ function OTP({ onSuccess }: VerifyOtpProps){
     }
   }
 
-  // Creates timer in 30 seconds and rerenders the page
   useEffect(() => {
     if (timeLeft <= 0) {
       setResendCode("reset");
