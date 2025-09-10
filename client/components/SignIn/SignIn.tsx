@@ -2,10 +2,10 @@ import styles from "./styles.module.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSignIn } from "@/hooks/useSignIn";
-import InputBox from "@/components/InputBox";
 import Header from "@/components/Header";
 import Button from "@/components/Button";
 import ALink from "@/components/ALink";
+import Form from "@/components/Form";
 
 function SignIn(){
   const [email, setEmail] = useState("");
@@ -27,27 +27,18 @@ function SignIn(){
       />
 
       <section className={ styles.content }>
-        <form className={ styles.form }>
-          
-          <InputBox
-            hint = "Enter Email"
-            label = "Email"
-            type = "email"
-            onChange = { setEmail }
-          />
-          
-          <InputBox
-            hint = "Enter Password"
-            label = "Password"
-            type = "password"
-            onChange = { setPassword }
-          />
-          
-          <ALink
-            label = "Forget Password?"
-            onClick = {() => navigate("/forget")}
-          />
-        </form>
+      
+        <Form 
+          labels = { ["Email", "Password"] }
+          hints = { ["Enter Email", "Enter Password"] }
+          types = { ["email", "password"] }
+          onChanges = { [setEmail, setPassword] }
+        />
+  
+        <ALink
+          label = "Forget Password?"
+          onClick = {() => navigate("/forget")}
+        />
       </section> 
       <footer className={ styles.footer }>
 
