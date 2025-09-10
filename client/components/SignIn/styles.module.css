@@ -11,30 +11,6 @@
     gap: 1.5rem;
   }
 
-  .header {
-    width: 100%;
-  }
-
-
-  /* ==== Content ==== */
-  /* - Header */
-  .title {
-    font-size: var(--mobile-title);
-    line-height: var(--mobile-title-height);
-  }
-
-  .description {
-    font-size: var(--mobile-subtitle);
-    line-height: var(--mobile-subtitle-height);
-  }
-
-  .title {
-    margin: 0;
-    padding: 0;
-  }
-
-  /* Content */
-
 
   .link {
     font-size: var(--mobile-link);
@@ -43,19 +19,8 @@
 
   /* Footer */
 
-  .primary-btn {
-    height: 32px;
-    border-radius: 5px;
-  }
-
-  .secondary-btn {
-    height: 32px;
-    margin-top: 0.5em;
-  }
-
 }
 
-/* Tablet View */
 @media (max-width: 1100px) and (min-width: 701px) {
   .component {
     padding-top: 22px;
@@ -64,10 +29,6 @@
     gap: 1.5rem;
   }
 
-  .header {
-    width: 100%;
-    text-align: center;
-  }
 
   .content {
     padding-left: var(--tablet-padding); 
@@ -79,26 +40,14 @@
     padding-right: var(--tablet-padding); 
   }
 
-  .title {
-    font-size: var(--tablet-title);
-    line-height: var(--tablet-title-height);
-  }  
 
 
-  /* Footer */
-  
   .footer {
     margin-bottom: 3rem;
   }
 
 
-  .title {
-    margin: 0;
-    padding: 0;
-  }
 }
-
-/* Desktop View */
 
 @media (min-width: 1101px) {
   .component {
@@ -113,12 +62,6 @@
     margin-right: auto;
   }
 
-  .header {
-    width: 100%;
-    text-align: left;
-    padding-left: var(--desktop-padding); 
-    padding-right: var(--desktop-padding); 
-  }
 
   .content {
     padding-left: var(--desktop-padding); 
@@ -130,11 +73,6 @@
     padding-right: var(--desktop-padding); 
   }
 
-  .title {
-    font-size: var(--desktop-title);
-    line-height: var(--desktop-title-height);
-    margin-bottom: 0.2em;
-  }  
 
   /* Footer */
   
@@ -143,17 +81,9 @@
   }
 
 
-  .description {
-    font-size: var(--desktop-subtitle);
-    line-height: var(--desktop-subtitle-height);
-  }
 }
 
 /* Universal Attribute */
-
-.title {
-  color: var(--primary);
-}
 
 
 .footer {
@@ -163,17 +93,6 @@
 }
 
 
-
-.link {
-  color: var(--link-color); 
-  text-align: right;
-}
-
-.description {
-  margin: 0;
-  padding: 0;
-  color: var(--hint-color);
-}
 
 .form {
   display: flex;

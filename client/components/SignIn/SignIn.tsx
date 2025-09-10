@@ -1,17 +1,16 @@
 import styles from "./styles.module.css";
 import { useState } from "react";
-import { useMediaQuery } from "react-responsive";
 import { useNavigate } from "react-router-dom";
 import { useSignIn } from "@/hooks/useSignIn";
 import InputBox from "@/components/InputBox";
+import Header from "@/components/Header";
 import Button from "@/components/Button";
+import ALink from "@/components/ALink";
 
 function SignIn(){
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const isMobile = useMediaQuery({ maxWidth: 700 });
-  const isTablet = useMediaQuery({ minWidth: 701, maxWidth: 1100 });
 
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -20,44 +19,15 @@ function SignIn(){
   }
 
   return (
-    <div className={styles.component}>
+    <div className={ styles.component }>
 
-      {/* Design space unrelated to form */}
-      <header className={styles.header}>
-        { isMobile ? (
-        <>
-          <h1 className={styles.title}>
-            Welcome!
-          </h1> 
-          <p className={styles.description}>
-            Proceed to your account
-          </p>
-        </>
-        ) : isTablet ? (
-        <>
-          <h1 className={styles.title}>
-            Welcome to Yummies & Cream!
-          </h1> 
-          <p className={styles.description}>
-            Proceed to Login
-          </p>
-        </>
-        ) : (
-          <>
-            <h1 className={styles.title}>
-              Hello, Welcome!
-            </h1>
-            <p className={styles.description}>
-              Proceed to your account
-            </p>
-          </>
-        )}
+      <Header 
+        title = {["Welcome!", "Welcome to Yummies & Cream!", "Hello, Welcome!"]}
+        subtitle = {["Proceed to your account", "Proceed to Login", "Proceed to your account"]}
+      />
 
-      </header>
-
-      {/* Main form content */}
-      <section className={styles.content}>
-        <form className={styles.form}>
+      <section className={ styles.content }>
+        <form className={ styles.form }>
           
           <InputBox
             hint = "Enter Email"
@@ -73,10 +43,13 @@ function SignIn(){
             onChange = { setPassword }
           />
           
-          <a className={styles.link} onClick={() => navigate("/forget")}>Forget Password?</a>
+          <ALink
+            label = "Forget Password?"
+            onClick = {() => navigate("/forget")}
+          />
         </form>
       </section> 
-      <footer className={styles.footer}>
+      <footer className={ styles.footer }>
 
         <Button
           label = "Sign In"
@@ -87,7 +60,7 @@ function SignIn(){
         <Button
           label = "Create Account"
           type = "secondary"
-          onClick = {onSubmit}
+          onClick = { onSubmit }
         />
 
       </footer>
