@@ -1,26 +1,18 @@
 import { createContext, useContext, useState, ReactNode } from "react";
 import { useLogger } from "@/hooks/useLogger";
-
-type OtpData = {
-  email: string;
-  password?: string;
-};
-
-type OtpContextType = {
-  otpData: OtpData;
-  setOtpData: React.Dispatch<React.SetStateAction<OtpData>>;
-};
+import { OtpData, OtpContextType } from "@/types/otp";
 
 const OtpContext = createContext<OtpContextType | null>(null);
 
 export const OtpProvider = ({ children }: { children: ReactNode }) => {
+  const log = useLogger("OtpProider");
+  log.debug(`set email: ${ otpData.email } and password: ${ otpData.password }`);
+
   const [otpData, setOtpData] = useState<OtpData>({
     email: "",
     password: "",
   });
 
-  const log = useLogger("OtpProider");
-  log.debug(`set email: ${ otpData.email } and password: ${ otpData.password }`);
   
   return (
     <OtpContext.Provider value={{ otpData, setOtpData }}>
