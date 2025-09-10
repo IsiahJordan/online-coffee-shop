@@ -3,7 +3,7 @@ import SignIn from "@/components/SignIn";
 import SignUp from "@/components/SignUp";
 import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import OTP from "@/components/OTP";
+import Otp from "@/components/Otp";
 import { OtpProvider } from "@/hooks/useOtp";
 import { postRegister } from "@/services/UserService";
 import SignInLayout from "@/layout/SignInLayout";
@@ -33,7 +33,7 @@ function SignPage() {
     <OtpProvider>   
       {isOtp ? (
         <OtpLayout>
-          <OTP
+          <Otp
             onSuccess={async (data) => {
               await postRegister(data);
               navigate("/sign?form=in");
