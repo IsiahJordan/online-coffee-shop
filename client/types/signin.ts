@@ -5,3 +5,8 @@ export type InputData = {
   onChange: (text: string) => string; 
 };
 
+export type UserProps = {
+  email: string;
+  password: string;
+  onSuccess: () => void;
+};

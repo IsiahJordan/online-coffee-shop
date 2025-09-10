@@ -1,8 +1,8 @@
 import styles from "./styles.module.css";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { postLogin } from "@/services/UserService";
 import { useNavigate } from "react-router-dom";
+import { useSignIn } from "@/hooks/useSignIn";
 import InputBox from "@/components/InputBox";
 import Button from "@/components/Button";
 
@@ -16,19 +16,7 @@ function SignIn(){
   const onSubmit = async (event) => {
     event.preventDefault();
 
-    // Data to be sent on api/users/login
-    const newUser = {
-      email: email,
-      password: password
-    };
-
-    try {
-      const res = await postLogin(newUser);
-      console.log(res);
-      navigate("/home");
-    } catch (err) {
-      console.error("Login Error", err);
-    }
+    await useSignIn(email, password, () => { navigate("/home"); });
   }
 
   return (
