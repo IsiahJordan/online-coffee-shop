@@ -1,7 +1,6 @@
-/* Mobile View */
 
 @media (max-width: 700px) {
-  /* ==== Placeholder ==== */
+
   .component {
     padding-left: var(--mobile-padding); 
     padding-right: var(--mobile-padding); 
@@ -10,14 +9,6 @@
     flex-direction: column;
     gap: 1.5rem;
   }
-
-
-  .link {
-    font-size: var(--mobile-link);
-    line-height: var(--mobile-text-height);
-  }
-
-  /* Footer */
 
 }
 
@@ -38,14 +29,8 @@
   .footer {
     padding-left: var(--tablet-padding); 
     padding-right: var(--tablet-padding); 
-  }
-
-
-
-  .footer {
     margin-bottom: 3rem;
   }
-
 
 }
 
@@ -71,19 +56,9 @@
   .footer {
     padding-left: var(--desktop-padding); 
     padding-right: var(--desktop-padding); 
-  }
-
-
-  /* Footer */
-  
-  .footer {
     margin-bottom: 3rem;
   }
-
-
 }
-
-/* Universal Attribute */
 
 
 .footer {
@@ -94,8 +69,3 @@
 
 
 
-.form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
