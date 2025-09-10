@@ -6,14 +6,14 @@ const OtpContext = createContext<OtpContextType | null>(null);
 
 export const OtpProvider = ({ children }: { children: ReactNode }) => {
   const log = useLogger("OtpProider");
-  log.debug(`set email: ${ otpData.email } and password: ${ otpData.password }`);
 
   const [otpData, setOtpData] = useState<OtpData>({
     email: "",
     password: "",
   });
 
-  
+  log.debug(`set email: ${ otpData.email } and password: ${ otpData.password }`);
+
   return (
     <OtpContext.Provider value={{ otpData, setOtpData }}>
       {children}
