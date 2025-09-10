@@ -1,5 +1,14 @@
+
+@media (max-width: 700px) {
+  
+  .link {
+    font-size: var(--mobile-link);
+    line-height: var(--mobile-text-height);
+  }
+
+}
+
 .link {
   color: var(--link-color); 
   text-align: right;
 }
-
