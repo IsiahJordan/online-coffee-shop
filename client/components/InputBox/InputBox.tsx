@@ -50,7 +50,16 @@ function InputBox({ hint, label, type, onChange }: InputProps) {
         { iconState ? (
           <FaRegEye className={styles["icon"]}/>
         ):(
-          <FaRegEyeSlash className={styles["icon"]}/>
+          <button className={ styles["icon-right"] } onClick={(e) => {
+            log.debug("user clicked button")
+
+            e.preventDefault();
+            setIconState((prev) => !prev)
+
+            log.debug(`set icon state to ${iconState}`);
+          }}>
+            <FaRegEyeSlash className={styles["icon"]}/>
+          </button>
         )}
       </>
     );
@@ -81,16 +90,7 @@ function InputBox({ hint, label, type, onChange }: InputProps) {
             log.debug("end of onChange");
           }}
         />
-        <button className={ styles["icon-right"] } onClick={(e) => {
-          log.debug("user clicked button")
-
-          e.preventDefault();
-          setIconState((prev) => !prev)
-
-          log.debug(`set icon state to ${iconState}`);
-        }}>
-          { right_icon }
-        </button>
+        { right_icon }
       </div>
     </>
   );

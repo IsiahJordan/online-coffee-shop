@@ -27,6 +27,7 @@
   .input {
     font-size: var(--tablet-text);
     line-height: var(--tablet-text-height);
+    width: 70%;
   }
 
 }
@@ -58,20 +59,20 @@
   position: relative;
   display: flex;
   align-items: center;
-  padding: 8px 4px;
+  padding: 0.5em 1em;
 }
 
 .icon {
   position: relative;
-  left: 8px;
   font-size: 1.2rem;
 }
 
 .input {
   background: transparent;
   border: none;
-  flex: 6;
-  padding-left: 2rem;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  width: 85%;
 }
 
 .icon-right {
@@ -79,8 +80,6 @@
   border: none;
   margin: none;
   display: flex;
-  align-items: center;
-  flex: 0.5;
 }
 
 .icon-right:hover {
