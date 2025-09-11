@@ -11,4 +11,5 @@
 .link {
   color: var(--link-color); 
   text-align: right;
+  float: right;
 }
