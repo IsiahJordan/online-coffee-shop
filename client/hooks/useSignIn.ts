@@ -12,7 +12,7 @@ export async function useSignIn(user: UserProps) {
     const res = await postLogin(newUser);
     
   } catch (err) {
-    log.danger("failed to post login");
+    log.error("failed to post login");
   }
   
   log.debug("end of post");
