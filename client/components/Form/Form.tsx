@@ -6,10 +6,6 @@ import { FormProps } from "@/types/form";
 function Form ({ labels, hints, types, onChanges }: FormProps) {
   const log = useLogger("Form");
   log.debug(`labels: ${ labels }, hints: ${ hints }, and types: ${ types }`);
-
-  for (let i = 0; i < labels.length(); i++){
-    log.debug(`LABELS: ${labels[i]}`);
-  }
   
   log.debug("end of component");
   return (
