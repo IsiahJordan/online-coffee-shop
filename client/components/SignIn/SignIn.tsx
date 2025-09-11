@@ -23,7 +23,7 @@ function SignIn(){
 
       <Header 
         title = {["Welcome!", "Welcome to Yummies & Cream!", "Hello, Welcome!"]}
-        subtitle = {["Proceed to your account", "Proceed to Login", "Proceed to your account"]}
+        subtitle = {["Proceed to your account", "Proceed to login", "Proceed to your account"]}
       />
 
       <section className={ styles.content }>
