@@ -46,13 +46,13 @@ function SignIn(){
         <Button
           label = "Sign In"
           type = "primary"
-          onClick = {(e) => navigate("?form=out", { replace: true })}
+          onClick = { onSubmit }
         />
 
         <Button
           label = "Create Account"
           type = "secondary"
-          onClick = { onSubmit }
+          onClick = {(e) => navigate("?form=out", { replace: true })}
         />
 
       </footer>
