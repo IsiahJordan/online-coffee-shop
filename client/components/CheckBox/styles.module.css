@@ -1,0 +1,38 @@
+
+@media (max-width: 700px) {
+
+  .terms {
+    font-size: var(--mobile-text);
+    line-height: var(--mobile-text-height);
+    color: var(--primary); 
+    text-align: left;
+    gap: 0.2em;
+    display: flex;
+    align-items: center;
+  }
+
+}
+
+@media (max-width: 1100px) and (min-width: 701px) {
+
+}
+
+@media (min-width: 1101px) {
+
+}
+
+.terms {
+  color: var(--primary); 
+  text-align: left;
+  gap: 0.2em;
+  display: flex;
+  align-items: center;
+}
+
+.link {
+  color: black;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
