@@ -1,8 +1,9 @@
 import styles from "./styles.module.css";
 import { useState } from "react";
-import { postSearch } from "@/services/UserService";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useOtp } from "@/hooks/useOtp";
+import { useSignUp } from "@/hooks/useSignUp";
+import { useLogger } from "@/hooks/useLogger";
 
 import Button from "@/components/Button";
 import InputBox from "@/components/InputBox";
@@ -18,39 +19,34 @@ function SignUp(){
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const { otpData, setOtpData } = useOtp();
+  const log = useLogger("SignUp");
+  log.debug("use signup page loading");
 
   const onSubmit = async (event) => {
     event.preventDefault();
+    log.debug("submit user");
+    
+    if (isAgreeChecked !== true) {
+      log.warn("aggree is not checked");
+    }
+    else {
+      log.debug("verifying account");
 
-    // Validated password
-    if (password !== repassword){
-      console.error("Error: Password Doesn't Match");
-    }
-    else if (isAgreeChecked === false){
-      console.error("Error: Agreement Isn't Accepted");
-    }
-    else{
-      // Pass data to server
-      const newUser = {
+      await useSignUp({
         email: email,
-        password: password
-      };
+        password: password,
+        repassword: repassword,
+        callback: () => {
+          log.debug("navigate to otp");
 
-      // verify email
-      const valid = await postSearch({ email: email });
-      const exist = Object.keys(valid.data).length;
-      
-      if (valid.success && exist > 0){
-        console.error("Error: Email Exists");
-      }
-      else {
-        setOtpData({ email, password });
-        navigate("/sign?form=out&otp=1");
-      }
-
+          setOtpData({ email: email, password: password });
+          navigate("/sign?form=out&otp=1");
+        }
+      });
     }
   }
 
+  log.debug("use signup page finish");
   return (
     <div className={styles.component}>
 
