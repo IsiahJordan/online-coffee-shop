@@ -9,6 +9,7 @@ export function useInputBox({ type, styles, onClick }: UseInputProps) {
   if (type === "email") {
     log.debug("email type inputbox created");
 
+    log.debug("end of email icon");
     return Icon({ 
       option: IconEnum.MAIL, 
       toggle: undefined, 
@@ -17,7 +18,6 @@ export function useInputBox({ type, styles, onClick }: UseInputProps) {
       onClick: undefined 
     });
 
-    log.debug("end of email icon");
   }
   else if (type === "password") {
     log.debug("password type inputbox created");
@@ -37,6 +37,6 @@ export function useInputBox({ type, styles, onClick }: UseInputProps) {
         styles: styles, 
         onClick: onClick }) 
     ];
-
   }
+
 }
