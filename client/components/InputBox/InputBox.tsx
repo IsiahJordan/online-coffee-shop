@@ -1,18 +1,17 @@
 import { InputProps } from "@/types/inputbox";
 import { ReactNode, useState } from "react";
 import styles from "./styles.module.css";
-import { MdEmail } from "react-icons/md";
-import { RiLockPasswordFill } from "react-icons/ri";
-import { FaRegEyeSlash, FaRegEye } from "react-icons/fa";
+import { useInputBox } from "@/hooks/useInputBox";
 import { useLogger } from "@/hooks/useLogger";
 
-function InputBox({ hint, label, type, onChange }: InputProps) {
+function InputBox({ name, hint, label, type, onChange }: InputProps) {
   const log = useLogger("InputBox");
+  log.debug(`name: ${ name }, hint: ${ hint }, label: ${ label },  type: ${ type }`);
 
   // If icon from right is set, then it's clickable
   log.debug("creating states");
-  const [iconState, setIconState] = useState(false); 
   const [inputText, setInputText] = useState("");
+  const [typeState, setTypeState] = useState(type);
   log.debug("end of states");
 
   // Left and right icon interactable & uninteractable
@@ -21,67 +20,42 @@ function InputBox({ hint, label, type, onChange }: InputProps) {
   let right_icon: ReactNode = (<></>);
   log.debug("end of states");
 
-  if (type === "email") {
-    log.debug("email type inputbox created");
+  switch (type) {
+    case "email":
+      log.debug("email is set");
 
-    left_icon = (
-      <>
-        <MdEmail className={styles["icon"]}/>
-      </>
-    );
+      left_icon = useInputBox({ type, styles, undefined });
+      break;
+    case "password":
+      log.debug("password is set");
+      [left_icon, right_icon] = useInputBox({ 
+        type: type, 
+        styles: styles, 
+        onClick: () => { 
+          log.debug("icon clicked");
 
-    log.debug("end of email icon");
-  }
-  else if (type === "password") {
-    log.debug("password type inputbox created");
-    
-    log.debug("set left icon to lock password fill");
-    left_icon = (
-      <>
-        <RiLockPasswordFill className={styles["icon"]}/>
-      </>
-    );
-
-    log.debug("end of password icon");
-    
-    log.debug("set right icon to eye icon");
-    right_icon = (
-      <>
-        { iconState ? (
-          <FaRegEye className={styles["icon"]}/>
-        ):(
-          <button className={ styles["icon-right"] } onClick={(e) => {
-            log.debug("user clicked button")
-
-            e.preventDefault();
-            setIconState((prev) => !prev)
-
-            log.debug(`set icon state to ${iconState}`);
-          }}>
-            <FaRegEyeSlash className={styles["icon"]}/>
-          </button>
-        )}
-      </>
-    );
-
-    log.debug("end of eye icon");
+          typeState === "password" ? setTypeState("text") : setTypeState("password"); 
+        }
+      });
+      break;
   }
 
   return (
     <>
       { label &&
-        <label className={ styles.label } htmlFor={ type }>
+        <label className={ styles.label } htmlFor={ name }>
           { label }
         </label>
       }
       <div className={ styles["input-group"] }>
         { left_icon }
         <input 
-          name={ type }
-          type={ type }
+          name={ name }
+          type={ typeState }
           className={ styles.input } 
           placeholder={ hint }
           onChange={(e) => {
+            e.preventDefault();
             log.debug("user changed input text");
 
             setInputText(e.target.value);
@@ -89,7 +63,7 @@ function InputBox({ hint, label, type, onChange }: InputProps) {
 
             log.debug("end of onChange");
           }}
-        />
+k        />
         { right_icon }
       </div>
     </>
