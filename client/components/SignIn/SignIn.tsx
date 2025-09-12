@@ -2,14 +2,20 @@ import styles from "./styles.module.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSignIn } from "@/hooks/useSignIn";
+import { useLogger } from "@/hooks/useLogger";
+
 import Header from "@/components/Header";
 import Button from "@/components/Button";
 import ALink from "@/components/ALink";
 import Form from "@/components/Form";
 
 function SignIn(){
+  const log = useLogger("SignIn");
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  log.debug(`email: ${email}, password: ${password}`);
+
   const navigate = useNavigate();
 
   const onSubmit = async (event) => {
@@ -17,7 +23,7 @@ function SignIn(){
 
     await useSignIn(email, password, () => { navigate("/home"); });
   }
-
+  
   return (
     <div className={ styles.component }>
 
@@ -29,6 +35,7 @@ function SignIn(){
       <section className={ styles.content }>
       
         <Form 
+          names = { ["email", "password"] }
           labels = { ["Email", "Password"] }
           hints = { ["Enter Email", "Enter Password"] }
           types = { ["email", "password"] }
