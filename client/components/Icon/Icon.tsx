@@ -4,6 +4,7 @@ import { FaRegEyeSlash, FaRegEye } from "react-icons/fa";
 import { useLogger } from "@/hooks/useLogger";
 import { IconProps, IconEnum } from "@/types/icon";
 import { React, useState } from "react";
+import { IoArrowBack } from "react-icons/io5";
 
 function getIcon({ option, styles }: { option: IconEnum, styles: React.CSSProperties }) {
   const log = useLogger("getIcon");
@@ -12,16 +13,20 @@ function getIcon({ option, styles }: { option: IconEnum, styles: React.CSSProper
   switch (option) {
     case IconEnum.EYE:
       log.debug("icon send EYE");
-      return (<FaRegEye className={styles["icon"]}/>);
+      return (<FaRegEye className={ styles["icon"] }/>);
     case IconEnum.NEYE:
       log.debug("icon send NEYE");
-      return (<FaRegEyeSlash className={styles["icon"]}/>);
+      return (<FaRegEyeSlash className={ styles["icon"] }/>);
     case IconEnum.LOCK:
       log.debug("icon send LOCK");
-      return (<RiLockPasswordFill className={styles["icon"]}/>);
+      return (<RiLockPasswordFill className={ styles["icon"] }/>);
     case IconEnum.MAIL:
       log.debug("icon send MAIL");
-      return (<MdEmail className={styles["icon"]}/>);
+      return (<MdEmail className={ styles["icon"] }/>);
+    case IconEnum.ARROW:
+      log.debug("icon send ARROW");
+      return (<IoArrowBack className={ styles["icon"] }/>);
+      
   }
   
   log.warn("no matching icon");

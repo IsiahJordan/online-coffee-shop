@@ -5,7 +5,8 @@ export enum IconEnum {
   EYE,
   NEYE,
   LOCK,
-  MAIL
+  MAIL,
+  ARROW
 };
 
 export type IconProps = {
