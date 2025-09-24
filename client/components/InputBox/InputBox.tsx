@@ -38,6 +38,8 @@ function InputBox({ name, hint, label, type, onChange }: InputProps) {
         }
       });
       break;
+    case "code":
+      break;
   }
 
   return (
