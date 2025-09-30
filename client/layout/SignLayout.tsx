@@ -1,10 +1,18 @@
 import AuthLayout from "./AuthLayout";
 import StarReview from "@/components/StarReview";
+import { verifyViewport } from "@/utils/media"
 import { SignProps } from "@/types/layout";
 
-function SignLayout({ type, children } : SignProps) {
+function SignLayout({ name, type, children } : SignProps) {
   let subtitle: string = "";
   let image: string = "";
+  let is_mobile: bool = false;
+  
+  verifyViewport({
+    onMobile: () => { is_mobile = true },
+    onTablet: () => { },
+    onDesktop: () => { }
+  });
 
   switch (type) {
     case "in":
@@ -15,7 +23,28 @@ function SignLayout({ type, children } : SignProps) {
       subtitle = "100,000+ users connected with Yummies & Cream, with a 4 rating reviews."
       image = "/coffee-signup.png"
       break;
+    default:
+      image = "/coffee-signin.png";
+      if (!is_mobile) {
+        return (
+          <AuthLayout formType = { "out" } heroExtras = {
+            image &&
+            <img className="picture" src={ image } alt="yummies_hero_pic.png"/>
+          }>
+            { children }
+          </AuthLayout>
+        );
+      }
+      else {
+
+        return (
+          <div className = { name }>
+            { children }
+          </div>
+        );
+      }
   }
+
 
   return (
     <AuthLayout 
@@ -25,9 +54,9 @@ function SignLayout({ type, children } : SignProps) {
             { subtitle }
         </p>
 
-        <StarReview count = { 4 }/>
+        <StarReview count={ 4 }/>
         { image !== "" && 
-          <img className="picture" src = { image } alt="yummies_hero_pic.png"/>
+          <img className="picture" src={ image } alt="yummies_hero_pic.png"/>
         }
       </>}
       formType = { type }
