@@ -7,7 +7,6 @@ import { OtpContext } from "@/context/OtpContext";
 import { postVerifyPassword, postUpdatePassword } from "@/services/UserService";
 import { useLogger } from "@/hooks/useLogger";
 
-import NewPasswordLayout from "@/layout/NewPasswordLayout";
 import Button from "@/components/Button";
 import Header from "@/components/Header";
 import InputBox from "@/components/InputBox";
@@ -63,7 +62,6 @@ function NewPasswordPage(){
   }
 
   return (
-    <NewPasswordLayout>
       <div className={ styles.page }>
 
         <Header 
@@ -99,7 +97,6 @@ function NewPasswordPage(){
           </div>
         </section> 
       </div>
-    </NewPasswordLayout>
   );
 }
 

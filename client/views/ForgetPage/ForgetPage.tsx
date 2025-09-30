@@ -8,7 +8,6 @@ import { verifyViewport } from "@/utils/media";
 import { OtpContext } from "@/context/OtpContext";
 import { useLogger } from "@/hooks/useLogger";
 
-import ForgetLayout from "@/layout/ForgetLayout";
 import Button from "@/components/Button";
 import Header from "@/components/Header";
 import InputBox from "@/components/InputBox";
@@ -47,8 +46,8 @@ function ForgetPage() {
   }
 
   return (
-    <ForgetLayout>
       <div className={ styles.page }>
+
           <BackIcon
               styles = { styles }
               callback = { () => navigate(-1) }
@@ -96,7 +95,6 @@ function ForgetPage() {
             </div>
           </section> 
       </div>
-    </ForgetLayout>
   );
 }
 

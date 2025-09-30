@@ -7,7 +7,6 @@ import { verifyViewport } from "@/utils/media";
 import { submitOtp, useGenOtp } from "@/hooks/useOtp";
 import { OtpContext } from "@/context/OtpContext";
 
-import OtpLayout from "@/layout/OtpLayout";
 import Button from "@/components/Button";
 import Header from "@/components/Header";
 import InputBox from "@/components/InputBox";
@@ -78,7 +77,6 @@ function OtpPage() {
   }
 
   return (
-    <OtpLayout>
     <div className = { styles.component }>
       <BackIcon
           styles = { styles }
@@ -132,7 +130,6 @@ function OtpPage() {
 
       </footer>
     </div>
-    </OtpLayout>
   );
 }
 
