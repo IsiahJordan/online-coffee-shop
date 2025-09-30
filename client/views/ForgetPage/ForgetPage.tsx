@@ -1,26 +1,37 @@
 import styles from "./styles.module.css";
-import ForgetLayout from "@/layout/ForgetLayout";
-import { IoArrowBack } from "react-icons/io5";
-import { MdEmail } from "react-icons/md";
+
 import { postTempUser } from "@/services/AuthService";
 import { postSearch } from "@/services/UserService";
-import Otp from "@/components/Otp";
-import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
-import { useState } from "react";
-import { useMediaQuery } from "react-responsive";
-import { useOtp } from "@/hooks/useOtp";
+import { useNavigate } from "react-router-dom";
+import { useState, useContext } from "react";
+import { verifyViewport } from "@/utils/media";
+import { OtpContext } from "@/context/OtpContext";
+import { useLogger } from "@/hooks/useLogger";
+
+import ForgetLayout from "@/layout/ForgetLayout";
+import Button from "@/components/Button";
+import Header from "@/components/Header";
+import InputBox from "@/components/InputBox";
+import BackIcon from "@/components/BackIcon";
+import Form from "@/components/Form";
 
 function ForgetPage() {
   const [email, setEmail] = useState("");
-  const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
-  const isMobile = useMediaQuery({ maxWidth: 700 });
-  const { otpData, setOtpData } = useOtp();
-  let isOtp = false;
+  const log = useLogger();
+  
+  const context = useContext(OtpContext);
+  if (!context) {
+    throw new Error("OtpPage must be used within OtpProvider");
+  }
+  const { otpData, setOtpData } = context;
 
-  const returnBack = () => {
-    navigate("/sign?form=in");
-  };
+  let is_mobile = false;
+  verifyViewport({
+    onMobile: () => { is_mobile = true; },
+    onTablet: () => {},
+    onDesktop: () => {}
+  });
 
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -28,78 +39,62 @@ function ForgetPage() {
 
     if (account.success){
       setOtpData({ email: email });
-      const newParams = new URLSearchParams(searchParams);
-      newParams.set("otp", "1");
-      setSearchParams(newParams);
+      navigate("/otp");
     }
     else {
-      console.error("Account Doesn't Exist");
+      log.error("Account Doesn't Exist");
     }
-  }
-
-  if (searchParams.has("otp")){
-    isOtp = true;
   }
 
   return (
     <ForgetLayout>
-      <div className={styles.page}>       
-        { !isOtp ? (
-        <>
-          { isMobile && 
-            <button type="button" className={styles["back-btn"]} onClick={returnBack}>
-              <IoArrowBack className={styles.arrow}/>
-            </button>
-          }
+      <div className={ styles.page }>
+          <BackIcon
+              styles = { styles }
+              callback = { () => navigate(-1) }
+          />
 
-          {/* Outer shell outside from form */}
-          <header className={styles.header}>
-            <h1 className={styles.title}> 
-              Send Email
-            </h1> 
+          <header className={ styles.header }>
+            <Header 
+              title = "Send Email"  
+            />
             <p className={styles.description}>
               Input your email address and we will email the code
               to you.
             </p>
           </header>   
 
-          {/* Main form conent */}
-          <section className={styles.content}>
-            <form className={styles.form}>
+          <section className={ styles.content }>
+            <div className={ styles.form }>
 
-              {/* Input contents */}
-              <div className={styles.code}>
-                <label className={styles.label} htmlFor="email">
-                  Email
-                </label>
-                <div className={styles["input-group"]}>
-                  <MdEmail className={styles["icon-left"]}/>
-                  <input 
-                      name="email" 
-                      type="email" 
-                      className={styles.input} 
-                      placeholder="Enter Email"
-                      onChange={(e) => setEmail(e.target.value)}
-                  required/>
-                </div>
-              </div>
-              <button className={styles["primary-btn"]} onClick={onSubmit}>Confirm email</button>
-              { !isMobile &&
-                <button className={styles["secondary-btn"]} onClick={() => navigate("/sign?form=in")}>Return to Sign In</button>
+              <Form 
+                names = { ["email"] }
+                labels = { ["Email"] }
+                hints = { ["Enter Email"] }
+                types = { ["email"] }
+                onChanges = { [setEmail] }
+              />
+              
+              <hr/>
+          
+              <Button
+                label = "Confirm Email"
+                type = "primary"
+                onClick = { onSubmit }
+              />
+              
+              { !is_mobile &&
+                (
+                  <Button
+                    label = "Return to Sign In"
+                    type = "secondary"
+                    onClick = {(e) => navigate(-1)}
+                  />
+                )
               }
-            </form>
+
+            </div>
           </section> 
-        </>
-        ) : (
-        <>
-          <Otp
-            onSuccess={async (data) => {
-              postTempUser({ email: email });
-              navigate("/password/change");
-            }}
-          />
-        </>
-        )}
       </div>
     </ForgetLayout>
   );
