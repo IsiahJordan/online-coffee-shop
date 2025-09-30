@@ -85,3 +85,15 @@
 .icon-right:hover {
   cursor: pointer;
 }
+
+.code-input {
+  width: 10vw;
+  min-width: 0;         
+  max-width: 90px;
+  height: 15vh;
+  max-height: 100px;
+  text-align: center;
+  font-size: var(--mobile-title);
+  box-sizing: border-box;
+  border-radius: 19px;
+}
