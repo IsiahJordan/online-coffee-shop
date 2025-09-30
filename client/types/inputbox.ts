@@ -1,6 +1,6 @@
 import React from "react";
 
-export type InputType = "email" | "password" | "text";
+export type InputType = "email" | "password" | "text" | "number";
 
 export type InputProps = {
   name: string;
