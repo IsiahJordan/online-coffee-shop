@@ -10,6 +10,7 @@ export const OtpProvider = ({ children }: { children: ReactNode }) => {
   const [otpData, setOtpData] = useState<OtpData>({
     email: "",
     password: "",
+    onSuccess: (data: OtpData) => {}
   });
 
   log.debug(`set email: ${ otpData.email } and password: ${ otpData.password }`);
