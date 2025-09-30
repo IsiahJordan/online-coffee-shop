@@ -10,11 +10,6 @@ import { Routes, Route } from "react-router-dom";
 import { OtpProvider } from "@/context/OtpContext";
 import "./styles.css";
 
-import SignInLayout from "@/layout/SignInLayout";
-import SignUpLayout from "@/layout/SignUpLayout";
-import OtpLayout from "@/layout/OtpLayout";
-import NewPasswordLayout from "@/layout/NewPasswordLayout";
-import ForgetLayout from "@/layout/ForgetLayout";
 import SignLayout from "@/layout/SignLayout";
 
 function App() { 
@@ -42,23 +37,32 @@ function App() {
         <Route path="/home" element={<HomePage/>} />
         <Route path="/otp" element={
           <OtpProvider>
-            <OtpLayout>
+            <SignLayout 
+              name = "otp"
+              type = "none" 
+            >
               <OtpPage/>
-            </OtpLayout>
+            </SignLayout>
           </OtpProvider>
         } />
         <Route path="/forget" element={
           <OtpProvider>
-            <ForgetLayout>
+            <SignLayout 
+              name = "forget"
+              type = "none" 
+            >
               <ForgetPage/>
-            </ForgetLayout>
+            </SignLayout>
           </OtpProvider>
         } />
         <Route path="/password/change" element={
           <OtpProvider>
-            <NewPasswordLayout>
+            <SignLayout 
+              name = "forget"
+              type = "none" 
+            >
               <NewPasswordPage/>
-            </NewPasswordLayout>
+            </SignLayout>
           </OtpProvider>
         } />
         <Route path="*" element={<ErrorPage/>} />
