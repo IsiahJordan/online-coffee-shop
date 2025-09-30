@@ -1,75 +1,113 @@
+import React, { ReactNode, useEffect, useState } from "react";
 import { InputProps } from "@/types/inputbox";
-import { ReactNode, useState } from "react";
 import styles from "./styles.module.css";
 import { useInputBox } from "@/hooks/useInputBox";
 import { useLogger } from "@/hooks/useLogger";
 
-function InputBox({ name, hint, label, type, onChange }: InputProps) {
+export default function InputBox({ name, hint, label, type, onChange }: InputProps) {
   const log = useLogger("InputBox");
-  log.debug(`name: ${ name }, hint: ${ hint }, label: ${ label },  type: ${ type }`);
+  log.debug(`name: ${name}, hint: ${hint}, label: ${label},  type: ${type}`);
 
-  // If icon from right is set, then it's clickable
-  log.debug("creating states");
+  // initial states
+  const initialTypeState = type === "number" ? "text" : type;
   const [inputText, setInputText] = useState("");
-  const [typeState, setTypeState] = useState(type);
-  log.debug("end of states");
+  const [typeState, setTypeState] = useState(initialTypeState);
 
-  // Left and right icon interactable & uninteractable
-  log.debug("creating icons");
+  // Keep typeState in sync if parent changes `type` prop
+  useEffect(() => {
+    setTypeState(type === "number" ? "text" : type);
+  }, [type]);
+
+  // Icon hook — call unconditionally (hooks must be called in the same order)
+  const handleIconClick = () => {
+    if (type === "password") {
+      setTypeState((prev) => (prev === "password" ? "text" : "password"));
+    }
+  };
+
+  const iconsResult = useInputBox({ type, styles, onClick: handleIconClick });
   let left_icon: ReactNode = (<></>);
   let right_icon: ReactNode = (<></>);
-  log.debug("end of states");
+
+  // useInputBox might return a single ReactNode or a tuple [left, right]
+  if (Array.isArray(iconsResult)) {
+    left_icon = iconsResult[0] ?? (<></>);
+    right_icon = iconsResult[1] ?? (<></>);
+  } else if (iconsResult) {
+    left_icon = iconsResult as ReactNode;
+  }
+
+  // defaults
+  let cls_name: string = "input";
+  let group_name: string = "";
+  let pattern: string = "";
+  let max_length: number = 100;
+  let input_mode: string = "";
 
   switch (type) {
     case "email":
-      log.debug("email is set");
-
-      left_icon = useInputBox({ type, styles, undefined });
+      cls_name = "input";
+      group_name = "input-group";
       break;
     case "password":
-      log.debug("password is set");
-      [left_icon, right_icon] = useInputBox({ 
-        type: type, 
-        styles: styles, 
-        onClick: () => { 
-          log.debug("icon clicked");
-
-          typeState === "password" ? setTypeState("text") : setTypeState("password"); 
-        }
-      });
+      cls_name = "input";
+      group_name = "input-group";
       break;
-    case "code":
+    case "number":
+      cls_name = "code-input";
+      pattern = "[0-9]*";
+      max_length = 1; // only allow a single digit
+      input_mode = "numeric"; // mobile keyboard hint
       break;
+    default:
+      cls_name = "input";
+      group_name = "input-group";
   }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    log.debug("user changed input text");
+
+    if (type === "number") {
+      // strip non-digits and enforce length
+      const filtered = e.target.value.replace(/\D/g, "").slice(0, max_length);
+      setInputText(filtered);
+      onChange && onChange(filtered);
+    } else {
+      const v = e.target.value;
+      setInputText(v);
+      onChange && onChange(v);
+    }
+
+    log.debug("end of onChange");
+  };
 
   return (
     <>
-      { label &&
-        <label className={ styles.label } htmlFor={ name }>
-          { label }
+      {label && (
+        <label className={styles.label} htmlFor={name}>
+          {label}
         </label>
-      }
-      <div className={ styles["input-group"] }>
-        { left_icon }
-        <input 
-          name={ name }
-          type={ typeState }
-          className={ styles.input } 
-          placeholder={ hint }
-          onChange={(e) => {
-            e.preventDefault();
-            log.debug("user changed input text");
+      )}
 
-            setInputText(e.target.value);
-            onChange(e.target.value);
+      <div className={styles[group_name]}>
+        {left_icon}
 
-            log.debug("end of onChange");
-          }}
-k        />
-        { right_icon }
+        <input
+          id={name}
+          name={name}
+          type={typeState}
+          inputMode={input_mode || undefined}
+          className={styles[cls_name]}
+          pattern={pattern || undefined}
+          placeholder={hint}
+          maxLength={max_length}
+          value={inputText}
+          onChange={handleChange}
+        />
+
+        {right_icon}
       </div>
     </>
   );
 }
 
-export default InputBox;
