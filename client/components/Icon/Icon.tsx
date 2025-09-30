@@ -33,6 +33,11 @@ function getIcon({ option, styles }: { option: IconEnum, styles: React.CSSProper
   return (<></>);
 }
 
+// option -> IconEnum.<enum name>
+// toggle -> if toggled via cliccked call something
+// type -> type btn or not
+// styles -> icon classname
+// onClick -> any clicked event
 function Icon({ option, toggle, type, styles, onClick }: IconProps) {
   let log = useLogger("Icon");
   log.debug(`type: ${ type }`);
