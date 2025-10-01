@@ -15,7 +15,7 @@ function Button({ label, type, onClick }: ButtonProps) {
 
   return (
     <>
-      <button className={ styles[type] } onClick={ onInteract }>
+      <button className={ styles[type] } onClick={ onInteract } data-testid="button">
         { label }
       </button>
     </>

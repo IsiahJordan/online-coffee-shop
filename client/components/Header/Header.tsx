@@ -15,7 +15,7 @@ function Header({ title, subtitle }: HeaderProps) {
   log.debug(`final title: ${final_title} and subtitle: ${final_subtitle}`);
 
   title_block = (
-    <h1 className={styles.title}>
+    <h1 className = { styles.title } data-testid="title">
       { final_title }
     </h1>
   );
@@ -23,7 +23,7 @@ function Header({ title, subtitle }: HeaderProps) {
   log.debug("set title block");
 
   sub_title_block = (
-    <p className={styles.subtitle}>
+    <p className = { styles.subtitle } data-testid="subtitle" >
       { final_subtitle }
     </p>
   );
@@ -33,7 +33,7 @@ function Header({ title, subtitle }: HeaderProps) {
   log.debug("end of component");
   return (
     <>
-      <header className={styles.header}>
+      <header className={styles.header} data-testid="hedear">
           { title_block }
           { sub_title_block }
       </header>

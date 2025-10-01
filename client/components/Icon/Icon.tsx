@@ -13,19 +13,19 @@ function getIcon({ option, styles }: { option: IconEnum, styles: React.CSSProper
   switch (option) {
     case IconEnum.EYE:
       log.debug("icon send EYE");
-      return (<FaRegEye className={ styles["icon"] }/>);
+      return (<FaRegEye className={ styles["icon"]} data-testid="eye-icon"/>);
     case IconEnum.NEYE:
       log.debug("icon send NEYE");
-      return (<FaRegEyeSlash className={ styles["icon"] }/>);
+      return (<FaRegEyeSlash className={ styles["icon"] } data-testid="neye-icon"/>);
     case IconEnum.LOCK:
       log.debug("icon send LOCK");
-      return (<RiLockPasswordFill className={ styles["icon"] }/>);
+      return (<RiLockPasswordFill className={ styles["icon"] } data-testid="lock-icon"/>);
     case IconEnum.MAIL:
       log.debug("icon send MAIL");
-      return (<MdEmail className={ styles["icon"] }/>);
+      return (<MdEmail className={ styles["icon"] } data-testid="mail-icon"/>);
     case IconEnum.ARROW:
       log.debug("icon send ARROW");
-      return (<IoArrowBack className={ styles["icon"] }/>);
+      return (<IoArrowBack className={ styles["icon"] } data-testid="arrow-icon"/>);
       
   }
   
@@ -34,7 +34,7 @@ function getIcon({ option, styles }: { option: IconEnum, styles: React.CSSProper
 }
 
 // option -> IconEnum.<enum name>
-// toggle -> if toggled via cliccked call something
+// toggle -> if toggled via clicked call something
 // type -> type btn or not
 // styles -> icon classname
 // onClick -> any clicked event
@@ -45,6 +45,12 @@ function Icon({ option, toggle, type, styles, onClick }: IconProps) {
   log.debug("set state");
   const [iconState, setIconState] = useState(false); 
   log.debug("done set");
+
+  if (styles === undefined) {
+    log.warn("no styles for icon was set");
+    styles = { };
+  }
+
   
   let icon = (<></>);
   if (iconState === false) {
@@ -73,7 +79,7 @@ function Icon({ option, toggle, type, styles, onClick }: IconProps) {
     log.debug("icon is button");
 
     icon =  (
-    <button className={ styles["icon-btn"] } onClick={clicked}>
+    <button className={ styles["icon-btn"] } onClick={ clicked } data-testid="icon-btn">
       { icon }
     </button>
     );

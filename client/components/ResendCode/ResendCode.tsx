@@ -27,10 +27,15 @@ function ResendCode({ text, limit, styles, callback }: ResendCodeType){
           setTimeLeft(limit);
           setResendCode("wait");
         }
-      }}>
+      }} data-testid="resend-btn">
         { text }
       </p>
-      <p data-form = { resendCode ?? "wait" } className = { styles["timer"] }>in { timeLeft } seconds</p>
+      <p 
+        data-form = { resendCode ?? "wait" } 
+        className = { styles["timer"] } 
+        data-testid="resend-text">
+          in { timeLeft } seconds
+      </p>
     </div>
   );
 }

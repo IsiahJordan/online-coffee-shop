@@ -9,7 +9,7 @@ function ALink({ label, onClick }: LinkProps) {
   log.debug("end of component");
   return (
     <>
-      <a className={ styles.link } onClick={ onClick }>
+      <a href="#" className={ styles.link } onClick={ onClick }>
         { label }
       </a>
     </>

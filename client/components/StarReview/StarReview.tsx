@@ -7,7 +7,7 @@ type StarReviewProps = {
 function StarReview({ count }: StarReviewProps) {
   const stars = [];
   for (let i = 0; i < count; i++) {
-    stars.push(<img key={i} className={styles.star} src="/star.png" alt="star" />);
+    stars.push(<img key={i} className={styles.star} src="/star.png" alt="star" data-testid="stars-icon"/>);
   }
 
   return <div className={styles.content}>{stars}</div>;

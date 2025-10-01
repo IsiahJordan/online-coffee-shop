@@ -84,28 +84,28 @@ export default function InputBox({ name, hint, label, type, onChange }: InputPro
   return (
     <>
       {label && (
-        <label className={styles.label} htmlFor={name}>
-          {label}
+        <label className={ styles.label } htmlFor={ name } data-testid="label">
+          { label }
         </label>
       )}
 
-      <div className={styles[group_name]}>
-        {left_icon}
+      <div className={ styles[group_name] } data-testid="group-input">
+        { left_icon }
 
         <input
-          id={name}
-          name={name}
-          type={typeState}
-          inputMode={input_mode || undefined}
-          className={styles[cls_name]}
-          pattern={pattern || undefined}
-          placeholder={hint}
-          maxLength={max_length}
-          value={inputText}
-          onChange={handleChange}
-        />
+          name = { name }
+          type = { typeState }
+          inputMode = { input_mode || undefined }
+          className = { styles[cls_name] }
+          pattern = { pattern || undefined }
+          placeholder=  { hint }
+          maxLength = { max_length }
+          value = { inputText }
+          onChange = { handleChange }
+          data-testid = "input"
+        /> 
 
-        {right_icon}
+        { right_icon }
       </div>
     </>
   );

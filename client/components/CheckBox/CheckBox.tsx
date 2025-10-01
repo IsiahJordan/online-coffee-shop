@@ -10,7 +10,11 @@ function CheckBox({ name, label, onChange, onClick }: CheckBoxProps) {
   let text_block = (<>{ label }</>);
   if (onClick) {
     text_block = (
-      <a className={ styles.link } onClick={(e) => { e.preventDefault(); onClick() }} href="" >
+      <a className={ styles.link } onClick={(e) => 
+      { 
+          e.preventDefault(); 
+          onClick(); 
+        }} href="#" data-testid="link">
         { label }
       </a>
     );
@@ -25,7 +29,7 @@ function CheckBox({ name, label, onChange, onClick }: CheckBoxProps) {
             log.debug(`toggle: ${ e.target.checked }`);
             onChange(e.target.checked);
           }
-        }/>
+        } data-testid="box"/>
         { text_block }
       </div>
     </> 
