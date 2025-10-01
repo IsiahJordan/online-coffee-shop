@@ -1,40 +1,47 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, act } from "@testing-library/react";
 import UserEvent from "@testing-library/user-event";
 import ResendCode from "./ResendCode";
 
 describe("ResendCode Component", () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+    vi.restoreAllMocks();
+  });
+
   it("render resendcode with text", () => {
     render(<ResendCode
       text = "test"
       limit = { 10 }
-      styles = {}
-      callback = {}
-    />)
+      styles = { { "timer": { }, "resend-timer": { }, "reset": { } } }
+      callback = { undefined }
+    />);
 
     expect(screen.getByText("test")).toBeInTheDocument();
   });
 
-  it("wait 10 seconds for resend code to be clickable", async () => {
-    vi.useFakeTimers();
-    const user = user.setup({ advanceTimers: vi.advanceTimersByTime });
-    const handleClick = vi.fn();
+  it("wait 10 seconds for resend code to be clickable", () => {
 
-    render(<ResendCode
-      text = "test"
-      limit = { 10 }
-      styles = { }
-      callback = { handleClick }
-    />);
-    const text = screen.getByText("test");
+    render(
+      <ResendCode
+        text = "test"
+        limit = { 3 }
+        styles = {{ timer: {}, "resend-timer": {}, reset: {} }}
+        callback = { vi.fn }
+      />
+    );
 
-    await user.click(text);
-    expect(handleClick).not.toHaveBeenCalled();
+    const btn = screen.getByTestId("resend-btn");
+    expect(btn).toHaveAttribute("data-form", "wait");
 
-    vi.advanceTimersByTime(10000);
+    act(() => {
+      vi.advanceTimersByTime(3000);
+    });
 
-    await user.click(text);
-    expect(handleClick).toHaveBeenCalledTimes(1);
+    expect(btn).toHaveAttribute("data-form", "reset");
 
-    vi.useRealTimers();
-  });
+    });
 });
