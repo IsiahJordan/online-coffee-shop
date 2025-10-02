@@ -39,10 +39,13 @@ async function authorize(req, res){
   const token = req.cookies.access_token;
 
   if (!token) {
+    console.warn("token not send")
     return res.status(401).json({ success: false, error: "No token, please login" });
   }
 
   const decoded = await verifyToken(token);
+  console.log(decoded.role);
+  console.log(role);
 
   if (!decoded.role || getRoleLevel(decoded.role) > getRoleLevel(role)) return res.status(201).json({ success: false, error: "Not Authoritize" });
 
