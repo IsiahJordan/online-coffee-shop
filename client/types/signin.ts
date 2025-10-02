@@ -8,5 +8,5 @@ export type InputData = {
 export type UserProps = {
   email: string;
   password: string;
-  onSuccess: () => void;
+  onSuccess?: () => void;
 };
