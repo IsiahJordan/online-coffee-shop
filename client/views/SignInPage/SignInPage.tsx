@@ -20,9 +20,15 @@ function SignInPage() {
 
   const onSubmit = async (event) => {
     event.preventDefault();
+    log.debug(email);
 
-    await useSignIn(email, password, () => { navigate("/home"); });
+    await useSignIn({ 
+      email: email, 
+      password: password, 
+      onSuccess: () => { navigate("/home"); 
+    }});
   }
+
   
   return (
     <div className={ styles.component }>
@@ -39,6 +45,7 @@ function SignInPage() {
           labels = { ["Email", "Password"] }
           hints = { ["Enter Email", "Enter Password"] }
           types = { ["email", "password"] }
+          values = { [email, password] }
           onChanges = { [setEmail, setPassword] }
         />
   
