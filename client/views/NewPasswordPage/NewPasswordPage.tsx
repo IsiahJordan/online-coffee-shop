@@ -15,7 +15,7 @@ import Form from "@/components/Form";
 function NewPasswordPage(){
   const [showPassword, setShowPassword] = useState([false, false]);
   const [newPassword, setNewPassword] = useState("");
-  const [repassword, setRePassword] = useState("");
+  const [rePassword, setRePassword] = useState("");
   const navigate = useNavigate();
   const log = useLogger();
 
@@ -44,7 +44,7 @@ function NewPasswordPage(){
     event.preventDefault();
 
     // Validated password
-    if (newPassword !== repassword){
+    if (newPassword !== rePassword){
       log.error("Error: Password Doesn't Match");
     }
     else{
@@ -77,6 +77,7 @@ function NewPasswordPage(){
               labels = { ["New Password", "New Re-Password"] }
               hints = { ["Enter New Password", "Enter New Re-Password"] }
               types = { ["password", "password"] }
+              values = { [newPassword, rePassword]  }
               onChanges = { [setNewPassword, setRePassword] }
             />
 
