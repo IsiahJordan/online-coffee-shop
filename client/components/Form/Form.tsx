@@ -3,7 +3,7 @@ import { useLogger } from "@/hooks/useLogger";
 import InputBox from "@/components/InputBox";
 import { FormProps } from "@/types/form";
 
-function Form ({ names, labels, hints, types, onChanges }: FormProps) {
+function Form ({ names, labels, hints, types, values, onChanges }: FormProps) {
   const log = useLogger("Form");
   log.debug(`names: ${ names }, labels: ${ labels }, hints: ${ hints }, types: ${ types }`);
   
@@ -19,6 +19,7 @@ function Form ({ names, labels, hints, types, onChanges }: FormProps) {
               hint = { hints[index] }
               label = { labels[index] }
               type = { types[index] }
+              value = { values[index] }
               onChange = { onChanges[index] }
             />
           </div> 

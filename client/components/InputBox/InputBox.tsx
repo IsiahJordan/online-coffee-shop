@@ -4,7 +4,7 @@ import styles from "./styles.module.css";
 import { useInputBox } from "@/hooks/useInputBox";
 import { useLogger } from "@/hooks/useLogger";
 
-export default function InputBox({ name, hint, label, type, onChange }: InputProps) {
+export default function InputBox({ name, hint, label, type, value, onChange }: InputProps) {
   const log = useLogger("InputBox");
   log.debug(`name: ${name}, hint: ${hint}, label: ${label},  type: ${type}`);
 
@@ -64,18 +64,19 @@ export default function InputBox({ name, hint, label, type, onChange }: InputPro
       group_name = "input-group";
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e) => {
     log.debug("user changed input text");
 
     if (type === "number") {
       // strip non-digits and enforce length
+      log.debug("entered code");
       const filtered = e.target.value.replace(/\D/g, "").slice(0, max_length);
-      setInputText(filtered);
-      onChange && onChange(filtered);
-    } else {
       const v = e.target.value;
-      setInputText(v);
-      onChange && onChange(v);
+      onChange(v);
+    } else {
+      log.debug("entered text");
+      const v = e.target.value;
+      onChange(v);
     }
 
     log.debug("end of onChange");
@@ -93,6 +94,7 @@ export default function InputBox({ name, hint, label, type, onChange }: InputPro
         { left_icon }
 
         <input
+          id = { name }
           name = { name }
           type = { typeState }
           inputMode = { input_mode || undefined }
@@ -100,7 +102,7 @@ export default function InputBox({ name, hint, label, type, onChange }: InputPro
           pattern = { pattern || undefined }
           placeholder=  { hint }
           maxLength = { max_length }
-          value = { inputText }
+          value = { value }
           onChange = { handleChange }
           data-testid = "input"
         /> 
