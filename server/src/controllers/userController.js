@@ -1,6 +1,7 @@
 const { createUser, getUser, updateLastLogin, updatePassword } = require('../models/Users.js');
 const { signToken, verifyToken } = require('../utility/security.js');
 const bcrypt = require('bcrypt');
+const { getRoleLevel } = require("../utility/lookup.js");
 
 async function register(req, res) {
   const { email, password } = req.body;
@@ -37,9 +38,13 @@ async function authorize(req, res){
   const { role } = req.body;
   const token = req.cookies.access_token;
 
+  if (!token) {
+    return res.status(401).json({ success: false, error: "No token, please login" });
+  }
+
   const decoded = await verifyToken(token);
 
-  if (!decoded.role || decoded.role !== role) return res.status(401).json({ success: false, error: "Not Authoritize" });
+  if (!decoded.role || getRoleLevel(decoded.role) > getRoleLevel(role)) return res.status(201).json({ success: false, error: "Not Authoritize" });
 
   res.status(201).json({ success: true, msg: "Authoritization Verified" });
 }
@@ -119,4 +124,4 @@ async function logout(req, res) {
   res.status(201).json({ success: true, msg: "Successful Cleared Cookies" });
 }
 
-module.exports = { register, login, search, temporary, verify, changePassword, logout };
+module.exports = { register, login, search, temporary, verify, changePassword, logout, authorize };
