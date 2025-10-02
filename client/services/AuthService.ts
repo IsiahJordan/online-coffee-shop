@@ -11,11 +11,11 @@ export async function postTempUser(user: { email: string }) {
   return res.data;
 }
 
-export async function postAuthUser(role: { expected: string }) {
+export async function postAuthUser(role: string ) {
   const log = useLogger("getAuthUser");
   log.info("called");
 
-  const res = await api.post("/users/authorize", role, { 
+  const res = await api.post("/users/authorize", { role }, { 
     withCredentials: true
   });
 
