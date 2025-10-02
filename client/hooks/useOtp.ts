@@ -5,12 +5,10 @@ import { useNavigate } from "react-router-dom";
 import { verifyOtp, notifyOtp, emailUser } from "@/services/OtpService";
 import { OtpProps, GenOtpProps } from "@/types/otp";
 
-export const submitOtp = async ({ otpData, code }: OtpProps) => {
+export const submitOtp = async ({ otpData, code, navigate }: OtpProps) => {
   const log = useLogger("useOtp");
-  log.debug("otp called");
+  log.info("otp called");
   
-  const navigate = useNavigate();
-
   try {
     const res = await verifyOtp({ email: otpData.email , code: code });
     log.info(res);
