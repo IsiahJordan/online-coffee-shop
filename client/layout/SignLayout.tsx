@@ -1,7 +1,37 @@
-import AuthLayout from "./AuthLayout";
 import StarReview from "@/components/StarReview";
 import { verifyViewport } from "@/utils/media"
 import { SignProps } from "@/types/layout";
+import "./sign.css";
+
+/* 
+ *  This is for overlapping
+ *  styles within sign in and 
+ *  sign up pages
+ *
+ * */
+function ParentLayout({ children, heroExtras, formType }){
+  let is_mobile = false, is_desktop = false;
+  verifyViewport({
+    onMobile: () => { is_mobile = true; is_desktop = false; },
+    onTablet: () => { is_mobile = false; is_desktop = false; },
+    onDesktop: () => { is_desktop = true; is_mobile = false; }
+  });
+  
+  return (
+    <div data-form={formType ?? "in"} className="page">
+      <div className="hero">
+        <img className="logo" src="/logo.svg" alt="yummies_cream_logo.svg"/>
+        { is_desktop && <h1 className="title">Yummies & Cream</h1> }
+        { is_desktop && heroExtras }
+        { !is_mobile && <div className="copyright">@Copyright 2025</div> }
+
+        </div>  
+      <div data-form={formType ?? "in"} className="feature">
+        { children }
+      </div>
+    </div>
+  ); 
+}
 
 function SignLayout({ name, type, children } : SignProps) {
   let subtitle: string = "";
@@ -27,12 +57,12 @@ function SignLayout({ name, type, children } : SignProps) {
       image = "/coffee-signin.png";
       if (!is_mobile) {
         return (
-          <AuthLayout formType = { "out" } heroExtras = {
+          <ParentLayout formType = { "out" } heroExtras = {
             image &&
             <img className="picture" src={ image } alt="yummies_hero_pic.png"/>
           }>
             { children }
-          </AuthLayout>
+          </ParentLayout>
         );
       }
       else {
@@ -45,9 +75,8 @@ function SignLayout({ name, type, children } : SignProps) {
       }
   }
 
-
   return (
-    <AuthLayout 
+    <ParentLayout 
       heroExtras={
       <>
         <p className="review">
@@ -62,7 +91,7 @@ function SignLayout({ name, type, children } : SignProps) {
       formType = { type }
     >
       { children }
-    </AuthLayout>
+    </ParentLayout>
   );
 }
 
