@@ -18,7 +18,7 @@ function SignUpPage() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [repassword, setRepassword] = useState("");
+  const [rePassword, setRepassword] = useState("");
   const [isAgreeChecked, setIsAgreeChecked] = useState(false);
 
   const navigate = useNavigate();
@@ -42,7 +42,7 @@ function SignUpPage() {
       await useSignUp({
         email: email,
         password: password,
-        repassword: repassword,
+        repassword: rePassword,
         callback: () => {
           log.debug("navigate to otp");
 
@@ -69,6 +69,7 @@ function SignUpPage() {
           labels = { ["Email", "Password", "Re-Password"] }
           hints = { ["Enter Email", "Enter Password", "Enter Re-Password"] }
           types = { ["email", "password", "password"] }
+          values = { [email, password, rePassword ] }
           onChanges = { [setEmail, setPassword, setRepassword] }
         />
       

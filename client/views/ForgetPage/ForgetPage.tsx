@@ -37,7 +37,10 @@ function ForgetPage() {
     const account = await postSearch({ email: email });
 
     if (account.success){
-      setOtpData({ email: email });
+      setOtpData({ email: email, onSuccess: async () => {
+        postTempUser({ email: email });
+        navigate("/password/change");
+      }});
       navigate("/otp");
     }
     else {
@@ -71,6 +74,7 @@ function ForgetPage() {
                 labels = { ["Email"] }
                 hints = { ["Enter Email"] }
                 types = { ["email"] }
+                values = { [email] }
                 onChanges = { [setEmail] }
               />
               
