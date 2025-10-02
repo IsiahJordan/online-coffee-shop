@@ -1,11 +1,12 @@
 import styles from "./styles.module.css";
 
-import { generateOtp } from "@/services/OtpService";
+import { emailUser, generateOtp } from "@/services/OtpService";
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { verifyViewport } from "@/utils/media";
 import { submitOtp, useGenOtp } from "@/hooks/useOtp";
 import { OtpContext } from "@/context/OtpContext";
+import { useLogger } from "@/hooks/useLogger";
 
 import Button from "@/components/Button";
 import Header from "@/components/Header";
@@ -16,6 +17,7 @@ import ResendCode from "@/components/ResendCode";
 function OtpPage() {
   const navigate = useNavigate();
   const [values, setValues] = useState(Array(4).fill(""));
+  const log = useLogger("OtpPage");
 
   const context = useContext(OtpContext);
   if (!context) {
@@ -46,11 +48,13 @@ function OtpPage() {
 
   const onSubmit = async (event) => {
     event.preventDefault(); 
+    log.info("on submit");
     const code = values.join(""); 
     
     await submitOtp({
       otpData,
-      code
+      code,
+      navigate
     });
   }
 
@@ -71,6 +75,7 @@ function OtpPage() {
         hint = { undefined }
         label = { undefined }
         type = { "number" }
+        value = { values[i] }
         onChange = { (value) => handleChange(value, i) }
       />
     )

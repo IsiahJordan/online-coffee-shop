@@ -3,7 +3,7 @@ import { useLogger } from "@/hooks/useLogger";
 
 export const generateOtp = async (entry : { email: string; }) => {
   const log = useLogger("generateOtp");
-  log.debug(`entry email: ${ entry.email }`);
+  log.info(`entry email: ${ entry.email }`);
 
   const res = await api.post("otp/create", entry);
 
