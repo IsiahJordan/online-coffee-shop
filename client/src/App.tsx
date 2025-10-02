@@ -11,61 +11,67 @@ import { OtpProvider } from "@/context/OtpContext";
 import "./styles.css";
 
 import SignLayout from "@/layout/SignLayout";
+import AuthLayout from "@/layout/AuthLayout";
 
 function App() { 
   return (
     <>
       <Routes>
-        <Route path="/sign/in" element={
-          <OtpProvider>
-            <SignLayout 
-              type = "in" 
-            >
-              <SignInPage/>
-            </SignLayout>
-          </OtpProvider>
-        } />
-        <Route path="/sign/up" element={
-          <OtpProvider>
-            <SignLayout 
-              type = "up" 
-            >
-              <SignUpPage/>
-            </SignLayout>
-          </OtpProvider>
-        } />
-        <Route path="/home" element={<HomePage/>} />
-        <Route path="/otp" element={
-          <OtpProvider>
-            <SignLayout 
-              name = "otp"
-              type = "none" 
-            >
-              <OtpPage/>
-            </SignLayout>
-          </OtpProvider>
-        } />
-        <Route path="/forget" element={
-          <OtpProvider>
-            <SignLayout 
-              name = "forget"
-              type = "none" 
-            >
-              <ForgetPage/>
-            </SignLayout>
-          </OtpProvider>
-        } />
-        <Route path="/password/change" element={
-          <OtpProvider>
-            <SignLayout 
-              name = "forget"
-              type = "none" 
-            >
-              <NewPasswordPage/>
-            </SignLayout>
-          </OtpProvider>
-        } />
-        <Route path="*" element={<ErrorPage/>} />
+        <Route element = { <AuthLayout role="visitor"/> }>
+          <Route path="/sign/in" element={
+            <OtpProvider>
+              <SignLayout 
+                type = "in" 
+              >
+                <SignInPage/>
+              </SignLayout>
+            </OtpProvider>
+          } />
+          <Route path="/sign/up" element={
+            <OtpProvider>
+              <SignLayout 
+                type = "up" 
+              >
+                <SignUpPage/>
+              </SignLayout>
+            </OtpProvider>
+          } />
+          <Route path="/otp" element={
+            <OtpProvider>
+              <SignLayout 
+                name = "otp"
+                type = "none" 
+              >
+                <OtpPage/>
+              </SignLayout>
+            </OtpProvider>
+          } />
+          <Route path="/forget" element={
+            <OtpProvider>
+              <SignLayout 
+                name = "forget"
+                type = "none" 
+              >
+                <ForgetPage/>
+              </SignLayout>
+            </OtpProvider>
+          } />
+          <Route path="/password/change" element={
+            <OtpProvider>
+              <SignLayout 
+                name = "forget"
+                type = "none" 
+              >
+                <NewPasswordPage/>
+              </SignLayout>
+            </OtpProvider>
+          } />
+        </Route>
+        
+        <Route element = { <AuthLayout role="viewer"/> }>
+          <Route path="/home" element = { <HomePage/> } />
+        </Route>
+        <Route path="*" element = { <ErrorPage/> } />
       </Routes>
     </>
   );
