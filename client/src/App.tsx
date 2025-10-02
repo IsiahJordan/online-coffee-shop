@@ -19,13 +19,11 @@ function App() {
       <Routes>
         <Route element = { <AuthLayout role="visitor"/> }>
           <Route path="/sign/in" element={
-            <OtpProvider>
-              <SignLayout 
-                type = "in" 
-              >
-                <SignInPage/>
-              </SignLayout>
-            </OtpProvider>
+            <SignLayout 
+              type = "in" 
+            >
+              <SignInPage/>
+            </SignLayout>
           } />
           <Route path="/sign/up" element={
             <OtpProvider>
