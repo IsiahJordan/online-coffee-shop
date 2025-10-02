@@ -13,7 +13,7 @@ function AuthLayout({ role }) {
   useEffect(() => {
     async function getAuthorize() {
       try {
-        const res = await postAuthUser({ expected: role });
+        const res = await postAuthUser(role);
         setIsAuthorize(res.success);
       } catch (e) {
         log.error("auth failed:", e);
@@ -23,8 +23,10 @@ function AuthLayout({ role }) {
 
     if (role !== "visitor") {
       getAuthorize();
+      log.debug("not visitor");
     } else {
       setIsAuthorize(true);
+      log.debug("visitor");
     }
   }, [role]);
 
