@@ -57,7 +57,7 @@ function SignLayout({ name, type, children } : SignProps) {
       image = "/coffee-signin.png";
       if (!is_mobile) {
         return (
-          <ParentLayout formType = { "out" } heroExtras = {
+          <ParentLayout formType = { "up" } heroExtras = {
             image &&
             <img className="picture" src={ image } alt="yummies_hero_pic.png"/>
           }>

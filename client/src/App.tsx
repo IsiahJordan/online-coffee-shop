@@ -28,7 +28,8 @@ function App() {
           <Route path="/sign/up" element={
             <OtpProvider>
               <SignLayout 
-                type = "up" 
+                name = "up"
+                type = "up"
               >
                 <SignUpPage/>
               </SignLayout>

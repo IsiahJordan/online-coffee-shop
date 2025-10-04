@@ -85,7 +85,7 @@
     width: 100vw;
   }
 
-  .page[data-form="out"] {
+  .page[data-form="up"] {
     display: flex;
     flex-direction: row;
     height: 100vh;
@@ -128,7 +128,7 @@
     border-top-right-radius: 50px;
   }
 
-  .feature[data-form="out"] {
+  .feature[data-form="up"] {
     width: 70vw;
     margin-left: auto;
     margin-right: auto;
