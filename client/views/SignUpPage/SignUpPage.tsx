@@ -5,6 +5,7 @@ import { useState, useContext } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useSignUp } from "@/hooks/useSignUp";
 import { useLogger } from "@/hooks/useLogger";
+import { postRegister } from "@/services/UserService";
 
 import Button from "@/components/Button";
 import InputBox from "@/components/InputBox";
@@ -46,7 +47,14 @@ function SignUpPage() {
         callback: () => {
           log.debug("navigate to otp");
 
-          setOtpData({ email: email, password: password });
+          setOtpData({ 
+            email: email, 
+            password: password,
+            onSuccess: async () => {
+              await postRegister({ email: otpData.email, password: otpData.password });
+              navigate("/sign/in");
+            }
+          });
           navigate("/otp");
         }
       });

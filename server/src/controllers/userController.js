@@ -18,7 +18,8 @@ async function search(req, res){
 
   // searh user
   const existing = await getUser(email);
-  if(!existing) return res.status(400).json({ success: false, msg: "Error in Searching"});
+  console.log(existing);
+  if(!existing) return res.status(200).json({ success: false, msg: "Not Found"});
 
   return res.status(201).json({ success: true, data: existing, msg: "Found Email" });
 }

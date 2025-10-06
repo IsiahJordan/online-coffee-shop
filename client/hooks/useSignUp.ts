@@ -15,10 +15,9 @@ export async function useSignUp ({ email, password, repassword, callback }: Sign
 
     // verify email
     const valid = await postSearch({ email: email });
-    const exist = Object.keys(valid.data).length;
-    log.debug(`valid: ${ valid }, exist: ${ exist }`);
+    log.debug(`valid: ${ valid }`);
     
-    if (valid.success && exist > 0){
+    if (valid.success){
       log.error("email exists");
     }
     else {

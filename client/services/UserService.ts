@@ -24,7 +24,8 @@ export const postSearch = async (user: { email: string }) => {
   log.debug(`post email: ${ user.email }`);
 
   const res = await api.post("/users/search", user);
-
+  
+  log.info("finish");
   return res.data;
 }
 

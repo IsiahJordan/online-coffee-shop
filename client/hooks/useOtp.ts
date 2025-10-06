@@ -9,7 +9,6 @@ export const submitOtp = async ({ otpData, code, navigate }: OtpProps) => {
   const log = useLogger("useOtp");
   log.info("otp called");
   
-  try {
     const res = await verifyOtp({ email: otpData.email , code: code });
     log.info(res);
 
@@ -31,9 +30,6 @@ export const submitOtp = async ({ otpData, code, navigate }: OtpProps) => {
         otpData.onSuccess({ email: otpData.email });
       }
     }
-  } catch (error) {
-    log.error("Error with the server: ", error);
-  }
 };
 
 export const useGenOtp = ({ otpData, callback }: GenOtpProps) => {
