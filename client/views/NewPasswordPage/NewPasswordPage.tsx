@@ -1,28 +1,35 @@
 import styles from "./styles.module.css";
-import { RiLockPasswordFill } from "react-icons/ri";
-import { FaRegEyeSlash } from "react-icons/fa";
-import { useState } from "react";
+
+import { useState, useEffect, useContext } from "react";
 import { postSearch } from "@/services/UserService";
-import { FaRegEye } from "react-icons/fa";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { useMediaQuery } from "react-responsive";
+import { useNavigate } from "react-router-dom";
+import { OtpContext } from "@/context/OtpContext";
 import { postVerifyPassword, postUpdatePassword } from "@/services/UserService";
-import NewPasswordLayout from "@/layout/NewPasswordLayout";
-import { useOtp } from "@/hooks/useOtp";
+import { useLogger } from "@/hooks/useLogger";
+
+import Button from "@/components/Button";
+import Header from "@/components/Header";
+import InputBox from "@/components/InputBox";
+import Form from "@/components/Form";
 
 function NewPasswordPage(){
   const [showPassword, setShowPassword] = useState([false, false]);
   const [newPassword, setNewPassword] = useState("");
-  const [repassword, setRepassword] = useState("");
+  const [rePassword, setRePassword] = useState("");
   const navigate = useNavigate();
-  const isMobile = useMediaQuery({ maxWidth: 700 });
-  const isTablet = useMediaQuery({ minWidth: 701, maxWidth: 1100 });
-  const { otpData, setOtpData }  = useOtp();
+  const log = useLogger();
 
+  const context = useContext(OtpContext);
+  if (!context) {
+    throw new Error("OtpPage must be used within OtpProvider");
+  }
+  const { otpData, setOtpData } = context;
+
+  /*
   if (!otpData.email){
     console.error("Error no email");
-    navigate("/sign?form=in");
-  }
+    navigate("/sign/in");
+  }*/
 
   const onShowClick = (event, index) => {
     event.preventDefault();
@@ -37,12 +44,12 @@ function NewPasswordPage(){
     event.preventDefault();
 
     // Validated password
-    if (newPassword !== repassword){
-      console.error("Error: Password Doesn't Match");
+    if (newPassword !== rePassword){
+      log.error("Error: Password Doesn't Match");
     }
     else{
-      console.log(otpData.email);
-      console.log(newPassword);
+      log.debug(otpData.email);
+      log.debug(newPassword);
       const userNewPassword = {
         email: otpData.email,
         password: newPassword
@@ -50,84 +57,47 @@ function NewPasswordPage(){
 
       await postUpdatePassword(userNewPassword);
 
-      navigate("/sign?form=in");
+      navigate("/sign/in");
     }
   }
 
   return (
-    <div className={styles.page}>
-      <NewPasswordLayout>
-        {/* Outer shell outside from form */}
-        <header className={styles.header}>
-          <h1 className={styles.title}> 
-            New Password
-          </h1> 
-          <p className={styles.description}>
-            Enter The New Password
-          </p>
-        </header>   
+      <div className={ styles.page }>
 
-        {/* Main form conent */}
-        <section className={styles.content}>
-          <form className={styles.form}>
+        <Header 
+          title = "Send Email"  
+          subtitle = "Enter The New Password"
+        />
 
-            {/* Input contents */}
+        <section className={ styles.content }>
+          <div className={ styles.form }>
 
-            {/* Password */}
-            <label className={styles.label} htmlFor="password">
-              New Password
-            </label>
-            <div className={styles["input-group"]}>
-              <RiLockPasswordFill className={styles["icon-left"]}/>
-              <input 
-                  name="repassword" 
-                  type={showPassword[1] ? "text" : "password"} 
-                  className={styles.input} 
-                  placeholder="Enter New Password"
-                  onChange={(e) => setNewPassword(e.target.value)}
-              required/>
-              { showPassword[1] ? (
-                <button className={styles["show-icon"]} onClick={(e) => onShowClick(e, 1)}>
-                  <FaRegEye className={styles["icon-right"]}/>
-                </button>
-              ):(
-                <button className={styles["show-icon"]} onClick={(e) => onShowClick(e, 1)}>
-                  <FaRegEyeSlash className={styles["icon-right"]}/>
-                </button>
-              )}
-            </div>
-            <label className={styles.label} htmlFor="password">
-              New Re-Password
-            </label>
-            <div className={styles["input-group"]}>
-              <RiLockPasswordFill className={styles["icon-left"]}/>
-              <input 
-                  name="repassword" 
-                  type={showPassword[2] ? "text" : "password"} 
-                  className={styles.input} 
-                  placeholder="Enter New Re-Password"
-                  onChange={(e) => setRepassword(e.target.value)}
-              required/>
-              { showPassword[2] ? (
-                <button className={styles["show-icon"]} onClick={(e) => onShowClick(e, 2)}>
-                  <FaRegEye className={styles["icon-right"]}/>
-                </button>
-              ):(
-                <button className={styles["show-icon"]} onClick={(e) => onShowClick(e, 2)}>
-                  <FaRegEyeSlash className={styles["icon-right"]}/>
-                </button>
-              )}
-            </div>
-            <footer className={styles.footer}>
-              <button className={styles["primary-btn"]} onClick={onSubmit}>Change Password</button>
-              { !isMobile &&
-                <button className={styles["secondary-btn"]} onClick={() => navigate("/sign?form=in")}>Return to Sign In</button>
-              }
-            </footer>
-          </form>
+            <Form 
+              names = { ["password", "repassword"] }
+              labels = { ["New Password", "New Re-Password"] }
+              hints = { ["Enter New Password", "Enter New Re-Password"] }
+              types = { ["password", "password"] }
+              values = { [newPassword, rePassword]  }
+              onChanges = { [setNewPassword, setRePassword] }
+            />
+
+            <hr/>
+
+            <Button
+              label = "Change Password"
+              type = "primary"
+              onClick = { onSubmit }
+            />
+            
+            <Button
+              label = "Return to Sign In"
+              type = "secondary"
+              onClick = {(e) => navigate("/sign/in")}
+            />
+
+          </div>
         </section> 
-      </NewPasswordLayout>
-    </div>
+      </div>
   );
 }
 

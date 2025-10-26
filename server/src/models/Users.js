@@ -17,7 +17,7 @@ async function getUser(email){
     [email]
   );
 
-  return result.rows;
+  return result.rows[0];
 }
 
 // Only use after login

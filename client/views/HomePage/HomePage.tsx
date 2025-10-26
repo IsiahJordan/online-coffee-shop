@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 function HomePage(){
   const navigate = useNavigate();
   const [productList, setProductList] = useState(null);
+
   useEffect(() => {
     const fetchProducts = async () => {
       const res = await postProduct({ length: 5 });
@@ -19,9 +20,9 @@ function HomePage(){
   console.log(productList);
 
   return (
-    <div className={styles.page}>
+    <div className={ styles.page }>
       <div>
-        <button onClick={() => { postLogout(); navigate("/sign?form=in");}}>Logout</button>        
+        <button onClick={() => { postLogout(); navigate("/sign/in"); }}>Logout</button>        
       </div>
     </div>
   );

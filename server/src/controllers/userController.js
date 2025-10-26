@@ -1,6 +1,7 @@
 const { createUser, getUser, updateLastLogin, updatePassword } = require('../models/Users.js');
 const { signToken, verifyToken } = require('../utility/security.js');
 const bcrypt = require('bcrypt');
+const { getRoleLevel } = require("../utility/lookup.js");
 
 async function register(req, res) {
   const { email, password } = req.body;
@@ -17,7 +18,8 @@ async function search(req, res){
 
   // searh user
   const existing = await getUser(email);
-  if(!existing) return res.status(400).json({ success: false, msg: "Error in Searching"});
+  console.log(existing);
+  if(!existing) return res.status(200).json({ success: false, msg: "Not Found"});
 
   return res.status(201).json({ success: true, data: existing, msg: "Found Email" });
 }
@@ -37,9 +39,16 @@ async function authorize(req, res){
   const { role } = req.body;
   const token = req.cookies.access_token;
 
-  const decoded = await verifyToken(token);
+  if (!token) {
+    console.warn("token not send")
+    return res.status(401).json({ success: false, error: "No token, please login" });
+  }
 
-  if (!decoded.role || decoded.role !== role) return res.status(401).json({ success: false, error: "Not Authoritize" });
+  const decoded = await verifyToken(token);
+  console.log(decoded.role);
+  console.log(role);
+
+  if (!decoded.role || getRoleLevel(decoded.role) > getRoleLevel(role)) return res.status(201).json({ success: false, error: "Not Authoritize" });
 
   res.status(201).json({ success: true, msg: "Authoritization Verified" });
 }
@@ -119,4 +128,4 @@ async function logout(req, res) {
   res.status(201).json({ success: true, msg: "Successful Cleared Cookies" });
 }
 
-module.exports = { register, login, search, temporary, verify, changePassword, logout };
+module.exports = { register, login, search, temporary, verify, changePassword, logout, authorize };

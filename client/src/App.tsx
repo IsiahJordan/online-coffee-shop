@@ -1,34 +1,76 @@
-import './styles.css';
-import SignPage from '@/views/SignPage'; 
-import ErrorPage from '@/views/ErrorPage';
-import HomePage from '@/views/HomePage';
-import OTP from '@/components/OTP';
-import ForgetPage from '@/views/ForgetPage';
-import NewPasswordPage from '@/views/NewPasswordPage';
-import { Routes, Route } from 'react-router-dom';
-import { OtpProvider } from '@/hooks/useOtp';
+import SignInPage from "@/views/SignInPage"; 
+import SignUpPage from "@/views/SignUpPage"; 
+import ErrorPage from "@/views/ErrorPage";
+import HomePage from "@/views/HomePage";
+import OtpPage from "@/views/OtpPage";
+import ForgetPage from "@/views/ForgetPage";
+import NewPasswordPage from "@/views/NewPasswordPage";
+
+import { Routes, Route } from "react-router-dom";
+import { OtpProvider } from "@/context/OtpContext";
+import "./styles.css";
+
+import SignLayout from "@/layout/SignLayout";
+import AuthLayout from "@/layout/AuthLayout";
 
 function App() { 
   return (
     <>
       <Routes>
-        <Route path="/sign" element={
-          <OtpProvider>
-            <SignPage/>
-          </OtpProvider>
-        } />
-        <Route path="/home" element={<HomePage/>} />
-        <Route path="/forget" element={
-          <OtpProvider>
-            <ForgetPage/>
-          </OtpProvider>
-        } />
-        <Route path="/password/change" element={
-          <OtpProvider>
-            <NewPasswordPage/>
-          </OtpProvider>
-        } />
-        <Route path="*" element={<ErrorPage/>} />
+        <Route element = { <AuthLayout role="visitor"/> }>
+          <Route path="/sign/in" element={
+            <SignLayout 
+              type = "in" 
+            >
+              <SignInPage/>
+            </SignLayout>
+          } />
+          <Route path="/sign/up" element={
+            <OtpProvider>
+              <SignLayout 
+                name = "up"
+                type = "up"
+              >
+                <SignUpPage/>
+              </SignLayout>
+            </OtpProvider>
+          } />
+          <Route path="/otp" element={
+            <OtpProvider>
+              <SignLayout 
+                name = "otp"
+                type = "none" 
+              >
+                <OtpPage/>
+              </SignLayout>
+            </OtpProvider>
+          } />
+          <Route path="/forget" element={
+            <OtpProvider>
+              <SignLayout 
+                name = "forget"
+                type = "none" 
+              >
+                <ForgetPage/>
+              </SignLayout>
+            </OtpProvider>
+          } />
+          <Route path="/password/change" element={
+            <OtpProvider>
+              <SignLayout 
+                name = "forget"
+                type = "none" 
+              >
+                <NewPasswordPage/>
+              </SignLayout>
+            </OtpProvider>
+          } />
+        </Route>
+        
+        <Route element = { <AuthLayout role="viewer"/> }>
+          <Route path="/home" element = { <HomePage/> } />
+        </Route>
+        <Route path="*" element = { <ErrorPage/> } />
       </Routes>
     </>
   );

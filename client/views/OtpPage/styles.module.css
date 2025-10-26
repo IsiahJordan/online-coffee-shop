@@ -1,0 +1,158 @@
+
+@media (max-width: 700px){
+
+  .component {
+    padding-left: 4rem; 
+    background: var(--sf);
+    padding-right: 4rem; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+  }
+
+  .input {
+    font-size: var(--mobile-text);
+    line-height: var(--mobile-text-height);
+  }
+
+  .icon-btn {
+    left: 5%;
+  }
+}
+
+@media (max-width: 1100px) and (min-width: 701px) {
+
+  .component {
+    padding-top: 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 13px;
+  }
+
+  .input {
+    font-size: var(--tablet-text);
+    line-height: var(--tablet-text-height);
+    width: 80%;
+  }
+
+  .input-group {
+    margin-bottom: 1rem;
+  }
+
+  .icon-btn {
+    visibility: hidden;
+  }
+
+  .footer {
+    padding-left: var(--tablet-padding); 
+    padding-right: var(--tablet-padding); 
+    margin-bottom: 3rem;
+  }
+
+}
+
+@media (min-width: 1101px) {
+
+  .component {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    gap: 1.5rem;
+    height: 100%;
+    width: 60vh;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .input {
+    font-size: var(--mobile-text);
+    line-height: var(--mobile-text-height);
+  }
+
+  .code {
+    padding-left: var(--desktop-padding); 
+    padding-right: var(--desktop-padding); 
+  }
+
+  .icon-btn {
+    visibility: hidden;
+  }
+
+  .footer {
+    padding-left: var(--tablet-padding); 
+    padding-right: var(--tablet-padding); 
+  }
+
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+}
+
+.input {
+  background: transparent;
+  border: none;
+  width: 10vw;
+}
+
+.link {
+  color: var(--link-color); 
+  text-align: right;
+  margin-bottom: 0px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.resend-timer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: -2px;
+}
+
+.reset {
+  font-size: var(--mobile-subtitle);
+  line-height: var(--mobile-subtitle-height);
+  color: var(--link-color);
+  margin-right: 4px;
+}
+
+.timer[data-form="reset"] {
+  display: none;
+}
+
+.reset[data-form="reset"]:hover {
+  cursor: pointer;
+}
+
+.code {
+  display: flex;
+  width: 80%;
+  gap: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2rem;
+  max-width: 1100px;
+  margin-bottom: 1.5rem;
+  justify-content: center;
+}
+
+.icon-btn {
+  position: absolute;
+  top: 0;
+  margin-top: 30px;
+}
+
+.icon {
+  width: 36px;
+  height: 32px;
+}
+

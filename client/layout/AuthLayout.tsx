@@ -1,30 +1,48 @@
-/* 
- *  This is for overlapping
- *  styles within sign in and 
- *  sign up pages
- *
- * */
-import "./auth.css";
-import { useMediaQuery } from "react-responsive";
+import { postAuthUser } from "@/services/AuthService";
+import { useLogger } from "@/hooks/useLogger";
+import { useEffect, useState } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
 
-function AuthLayout({ children, heroExtras, formType }){
-  const isNotMobile = useMediaQuery({ minWidth: 701, minHeight: 760 });
-  const isDesktop = useMediaQuery({ minWidth: 1101 });
-  
-  return (
-    <div data-form={formType ?? "in"} className="page">
-      <div className="hero">
-        <img className="logo" src="/logo.svg" alt="yummies_cream_logo.svg"/>
-        { isDesktop && <h1 className="title">Yummies & Cream</h1> }
-        { isDesktop && heroExtras }
-        { isNotMobile && <div className="copyright">@Copyright 2025</div> }
+function AuthLayout({ role }) {
+  const [isAuthorize, setIsAuthorize] = useState(null); 
+  const navigate = useNavigate();
+  const log = useLogger("AuthLayout");
 
-        </div>  
-      <div data-form={formType ?? "in"} className="feature">
-        { children }
-      </div>
-    </div>
-  ); 
+  log.info("called");
+
+  useEffect(() => {
+    async function getAuthorize() {
+      try {
+        const res = await postAuthUser(role);
+        setIsAuthorize(res.success);
+      } catch (e) {
+        log.error("auth failed:", e);
+        setIsAuthorize(false);
+      }
+    }
+
+    if (role !== "visitor") {
+      getAuthorize();
+      log.debug("not visitor");
+    } else {
+      setIsAuthorize(true);
+      log.debug("visitor");
+    }
+  }, [role]);
+
+  useEffect(() => {
+    if (isAuthorize === false) {
+      navigate("/error");
+    }
+  }, [isAuthorize, navigate]);
+
+
+  if (isAuthorize === null) {
+    return <div>Checking authorization...</div>; 
+  }
+
+  return <Outlet />;
 }
 
 export default AuthLayout;
+

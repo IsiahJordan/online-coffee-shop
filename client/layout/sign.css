@@ -1,0 +1,176 @@
+/* Mobile View */
+
+@media (max-width: 700px) {
+  .page {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+
+  .hero {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .feature {
+    border-top-left-radius: 13px;
+    border-top-right-radius: 13px;
+  }
+
+  .review {
+    display: none;
+  }
+
+  .logo {
+    width: 35vw;
+    max-width: 144px;
+    height: auto;
+  }
+
+  .otp {
+    height: 100vh;
+  }
+
+}
+
+/* Table View */
+
+@media (max-width: 1100px) and (min-width: 701px) {
+  .hero {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 1.5rem;
+  } 
+
+  .logo {
+    width: 20vw;
+    max-width: 216px;
+    height: auto;
+  }
+
+  .review {
+    font-size: var(--tablet-text);
+    line-height: var(--tablet-text-height);
+    color: rgba(255, 255, 255, 0.6);
+    text-align: center;
+    margin-bottom: 32px;
+    width: 60vh;
+  }
+
+  .feature {
+    width: 70vw;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 13px;
+  }
+  
+  .copyright {
+    bottom: 10px;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+  }
+}
+
+/* Desktop View */
+
+@media (min-width: 1101px) {
+  .page[data-form="in"] {
+    display: flex;
+    flex-direction: row-reverse;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  .page[data-form="up"] {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  .hero {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex: 2;
+  } 
+  
+  .logo {
+    width: 15vw;
+    max-width: 288px;
+    height: auto;
+  }
+
+  .picture {
+    width: 30vw;
+    max-width: 500px;
+    height: auto;
+    margin-top: -4rem;
+  } 
+  
+  .title {
+    font-size: var(--desktop-title);
+    line-height: var(--desktop-title-height);
+    color: rgb(255, 255, 255);
+    margin: 0;
+    padding: 0;
+  }
+
+  .feature[data-form="in"] {
+    width: 70vw;
+    margin-left: auto;
+    margin-right: auto;
+    border-top-right-radius: 50px;
+  }
+
+  .feature[data-form="up"] {
+    width: 70vw;
+    margin-left: auto;
+    margin-right: auto;
+    border-top-left-radius: 50px;
+  }
+  
+  .review {
+    font-size: var(--desktop-text);
+    line-height: var(--desktop-text-height);
+    color: rgba(255, 255, 255, 0.6);
+    text-align: center;
+    margin-bottom: 2rem;
+    width: 60vh;
+  }
+}
+
+/* Universal Design */
+
+.page {
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.feature {
+  background: var(--sf);
+  flex: 1;
+}
+
+.picture {
+  width: 500px;
+  height: 500px;
+  margin-top: -100px;
+}
+
+.logo,
+.picture {
+  display: block;
+  object-fit: contain; /* safe scaling */
+}
+
+.copyright {
+  font-size: var(--copyright-text);
+  line-height: var(--copyright-text-height);
+  color: white;
+}

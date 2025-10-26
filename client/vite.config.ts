@@ -9,5 +9,11 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname)
     }
+  },
+  test: {
+    environment: "jsdom",
+    globals: true,
+    setupFiles: "./src/setupTests.js",
+    testTimeout: 20000
   }
 })
